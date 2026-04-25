@@ -5,15 +5,16 @@ export default async function handler(req, res) {
 
   try {
     if (req.method === 'GET') {
-      const { partner } = req.query;
-      const data = await sql`SELECT * FROM seserahan WHERE partner_name = ${partner} ORDER BY created_at DESC`;
+      const { email } = req.query;
+      // Ambil data hanya milik user yang sedang login
+      const data = await sql`SELECT * FROM seserahan WHERE user_email = ${email} ORDER BY created_at DESC`;
       return res.status(200).json(data);
     } 
     
     if (req.method === 'POST') {
-      const { partner_name, category, item_name, price, img_url } = req.body;
-      await sql`INSERT INTO seserahan (partner_name, category, item_name, price, img_url) 
-                VALUES (${partner_name}, ${category}, ${item_name}, ${price}, ${img_url})`;
+      const { user_email, partner_name, category, item_name, price, img_url } = req.body;
+      await sql`INSERT INTO seserahan (user_email, partner_name, category, item_name, price, img_url) 
+                VALUES (${user_email}, ${partner_name}, ${category}, ${item_name}, ${price}, ${img_url})`;
       return res.status(200).json({ msg: 'Success' });
     }
 
