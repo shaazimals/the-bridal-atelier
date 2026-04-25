@@ -17,23 +17,24 @@
         .charm { font-family: 'Charm', cursive; }
         .elegant { font-family: 'Playfair Display', serif; }
 
-        /* === SUPER GLOW SPARKLES (PERSIS GAMBAR) === */
+        /* === GLOW SPARKLES WARNA FONT (#c9b0a7) === */
         .sparkle-container { position: relative; display: inline-block; }
         
         .glow-dot {
             position: absolute;
-            background: white;
+            background: #c9b0a7; /* WARNA SAMA DENGAN FONT */
             border-radius: 50%;
-            filter: blur(1px);
+            filter: blur(0.5px);
+            /* Cahaya glow juga pakai warna senada tapi transparan */
             box-shadow: 
-                0 0 15px 5px rgba(255, 255, 255, 0.9),
-                0 0 30px 10px rgba(255, 244, 230, 0.6);
+                0 0 10px 2px rgba(201, 176, 167, 0.8),
+                0 0 20px 5px rgba(201, 176, 167, 0.4);
             animation: sparklePulse 4s infinite ease-in-out;
             pointer-events: none;
             z-index: 20;
         }
 
-        /* Efek Bintang (+) Di Tengah Glow */
+        /* Bintang (+) di tengah glow pakai warna putih biar tajam */
         .glow-dot::before, .glow-dot::after {
             content: '';
             position: absolute;
@@ -41,14 +42,14 @@
             left: 50%;
             background: white;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px white;
+            box-shadow: 0 0 5px white;
         }
-        .glow-dot::before { width: 1px; height: 180%; } /* Garis Vertikal */
-        .glow-dot::after { width: 180%; height: 1px; }  /* Garis Horizontal */
+        .glow-dot::before { width: 1px; height: 160%; }
+        .glow-dot::after { width: 160%; height: 1px; }
 
         @keyframes sparklePulse {
-            0%, 100% { opacity: 0.4; transform: scale(0.8) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1.2) rotate(90deg); }
+            0%, 100% { opacity: 0.6; transform: scale(0.8) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.1) rotate(90deg); }
         }
 
         /* Frosted Glass Panel */
@@ -83,8 +84,8 @@
                 <div class="sparkle-container">
                     <div class="glow-dot w-3 h-3 -top-8 -left-12"></div>
                     <div class="glow-dot w-2 h-2 -top-4 right-10" style="animation-delay: 1s;"></div>
-                    <div class="glow-dot w-4 h-4 bottom-0 -right-16" style="animation-delay: 2s;"></div>
-                    <div class="glow-dot w-2 h-2 top-20 -left-20" style="animation-delay: 0.5s;"></div>
+                    <div class="glow-dot w-3 h-3 bottom-0 -right-14" style="animation-delay: 2s;"></div>
+                    <div class="glow-dot w-2 h-2 top-20 -left-16" style="animation-delay: 0.5s;"></div>
                     
                     <h2 class="charm text-8xl md:text-[10rem] text-[#c9b0a7] leading-none mb-8">VowsDB</h2>
                 </div>
@@ -94,56 +95,12 @@
                 </p>
 
                 <div class="relative inline-block">
-                    <div class="glow-dot w-2 h-2 -top-4 -right-6" style="animation-delay: 1.5s;"></div>
                     <div id="googleBtn"></div>
                 </div>
                 
                 <p class="text-[9px] mt-24 opacity-40 tracking-[0.3em] uppercase font-bold">By Haazima</p>
             </div>
         </div>
-    </div>
-
-    <div id="setupName" class="fixed inset-0 z-[110] flex items-center justify-center p-6 page-transition hidden hidden-fade">
-        <div class="max-w-md w-full text-center">
-            <h3 class="charm text-6xl text-[#c9b0a7] mb-10">Our Names</h3>
-            <div class="frosted-panel p-12 space-y-6">
-                <input type="text" id="inputUser" placeholder="Her Name" class="w-full p-5 rounded-3xl bg-white/70 border-none text-center outline-none focus:ring-2 focus:ring-[#eaddd7]">
-                <input type="text" id="inputPartner" placeholder="His Name" class="w-full p-5 rounded-3xl bg-white/70 border-none text-center outline-none focus:ring-2 focus:ring-[#eaddd7]">
-                <button onclick="saveProfile()" class="w-full btn-pearl py-5 rounded-full font-bold text-[10px] uppercase mt-4">
-                    START OUR JOURNEY ✨
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="app" class="max-w-4xl mx-auto px-6 pt-28 page-transition hidden hidden-fade pb-40">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-28 gap-12">
-            <div class="text-center md:text-left">
-                <p class="elegant italic text-[#c9b0a7] text-2xl">Sweet Devotion</p>
-                <h1 id="titleDisplay" class="charm text-8xl text-[#8e7d77] mt-3 tracking-wide">Siti & Maas</h1>
-                <button onclick="logout()" class="text-[9px] tracking-[0.5em] uppercase mt-8 opacity-40 hover:opacity-100 transition-opacity">— Sign Out</button>
-            </div>
-            <div class="bg-white/50 backdrop-blur-xl p-12 rounded-[4rem] border border-white text-center shadow-sm">
-                <p class="text-[9px] font-bold uppercase tracking-[0.4em] mb-4 opacity-50">Total Collection</p>
-                <p id="totalPrice" class="text-5xl font-bold text-[#8e7d77] tracking-tighter">Rp0</p>
-            </div>
-        </header>
-
-        <div class="frosted-panel p-12 mb-32">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <select id="cat" class="w-full p-5 rounded-3xl bg-white/60 border-none text-[10px] font-bold outline-none cursor-pointer">
-                    <option>Wedding Attire</option><option>Bridal Beauty</option><option>Jewelry</option><option>The Ceremony</option>
-                </select>
-                <input type="number" id="price" placeholder="Value (Rp)" class="w-full p-5 rounded-3xl bg-white/60 border-none text-[10px] outline-none">
-                <input type="text" id="name" placeholder="Item name..." class="md:col-span-2 w-full p-5 rounded-3xl bg-white/60 border-none text-[10px] outline-none">
-                <input type="text" id="img" placeholder="Inspiration Image Link" class="md:col-span-2 w-full p-5 rounded-3xl bg-white/60 border-none text-[10px] outline-none">
-            </div>
-            <button onclick="addItem()" id="btnSimpan" class="w-full mt-10 btn-pearl py-6 rounded-full font-bold text-[10px] uppercase">
-                Add to Memory ✨
-            </button>
-        </div>
-
-        <div id="content" class="space-y-40"></div>
     </div>
 
     <script>
@@ -180,90 +137,14 @@
             document.getElementById('loginSection').classList.add('hidden-fade');
             setTimeout(() => {
                 document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('setupName').classList.remove('hidden');
-                setTimeout(() => document.getElementById('setupName').classList.remove('hidden-fade'), 50);
+                showSetupName();
             }, 1200);
         }
 
-        function saveProfile() {
-            const m = document.getElementById('inputUser').value;
-            const p = document.getElementById('inputPartner').value;
-            if(m && p) {
-                localStorage.setItem('my_name', m);
-                localStorage.setItem('partner_name', p);
-                document.getElementById('setupName').classList.add('hidden-fade');
-                setTimeout(() => {
-                    document.getElementById('setupName').classList.add('hidden');
-                    showMainApp();
-                }, 1200);
-            }
+        function showSetupName() {
+            // Logic setup nama jika diperlukan
         }
 
-        function showMainApp() {
-            const app = document.getElementById('app');
-            app.classList.remove('hidden');
-            setTimeout(() => app.classList.remove('hidden-fade'), 50);
-            document.getElementById('titleDisplay').innerText = `${localStorage.getItem('my_name')} & ${localStorage.getItem('partner_name')}`;
-            loadData();
-        }
-
-        async function loadData() {
-            const res = await fetch(`/api/manage?email=${localStorage.getItem('user_email')}`);
-            const data = await res.json();
-            render(Array.isArray(data) ? data : []);
-        }
-
-        async function addItem() {
-            const body = {
-                user_email: localStorage.getItem('user_email'),
-                partner_name: `${localStorage.getItem('my_name')} & ${localStorage.getItem('partner_name')}`,
-                category: document.getElementById('cat').value,
-                item_name: document.getElementById('name').value,
-                price: parseInt(document.getElementById('price').value) || 0,
-                img_url: document.getElementById('img').value || ''
-            };
-            await fetch('/api/manage', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
-            loadData();
-            document.getElementById('name').value = ''; document.getElementById('price').value = ''; document.getElementById('img').value = '';
-        }
-
-        function render(data) {
-            const container = document.getElementById('content');
-            const totalDisplay = document.getElementById('totalPrice');
-            container.innerHTML = '';
-            const total = data.reduce((s, i) => s + i.price, 0);
-            totalDisplay.innerText = `Rp${total.toLocaleString('id-ID')}`;
-            const grouped = data.reduce((r, a) => { r[a.category] = [...r[a.category] || [], a]; return r; }, {});
-
-            for (const cat in grouped) {
-                let html = `
-                    <div class="fade-in-up">
-                        <div class="flex items-center gap-10 mb-16">
-                            <h3 class="elegant italic text-3xl">${cat}</h3>
-                            <div class="h-[1.5px] flex-grow bg-[#c9b0a7]/20"></div>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">`;
-                
-                grouped[cat].forEach(i => {
-                    html += `
-                        <div class="bg-white/90 rounded-[4rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-1000 group border-[10px] border-white relative">
-                            <div class="relative aspect-[4/5] overflow-hidden">
-                                <button onclick="deleteItem(${i.id})" class="absolute top-6 right-6 bg-white/90 text-[#c9b0a7] w-12 h-12 rounded-full z-20 opacity-0 group-hover:opacity-100 transition-all font-bold">✕</button>
-                                <img src="${i.img_url || 'https://via.placeholder.com/600x800'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
-                            </div>
-                            <div class="p-10">
-                                <p class="text-[9px] text-[#c9b0a7] uppercase tracking-[0.4em] mb-4">${cat}</p>
-                                <p class="elegant text-2xl mb-4 leading-tight">${i.item_name}</p>
-                                <p class="text-[#c9b0a7] font-bold text-xl tracking-tighter">Rp${i.price.toLocaleString('id-ID')}</p>
-                            </div>
-                        </div>`;
-                });
-                html += `</div></div>`;
-                container.innerHTML += html;
-            }
-        }
-
-        async function deleteItem(id) { if(confirm("Remove?")) { await fetch(`/api/manage?id=${id}`, { method: 'DELETE' }); loadData(); } }
         function logout() { localStorage.clear(); location.reload(); }
     </script>
 </body>
