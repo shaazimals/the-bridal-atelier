@@ -8,25 +8,77 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: radial-gradient(circle at center, #ffffff 0%, #f9f0f0 100%); min-height: 100vh; color: #7a5c5c; margin: 0; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: radial-gradient(circle at center, #ffffff 0%, #f9f0f0 100%);
+            min-height: 100vh;
+            color: #7a5c5c;
+            margin: 0;
+        }
         .charm { font-family: 'Charm', cursive; }
         .elegant { font-family: 'Playfair Display', serif; }
-        .glow-dot { position: absolute; background: #e5b3b3; border-radius: 50%; filter: blur(1px); box-shadow: 0 0 15px 5px rgba(229, 179, 179, 0.6); animation: sparklePulse 4s infinite ease-in-out; pointer-events: none; }
-        @keyframes sparklePulse { 0%, 100% { opacity: 0.5; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } }
-        .frosted-panel { background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(40px); border: 1.5px solid rgba(229, 179, 179, 0.3); border-radius: 40px; }
-        .btn-rose { background: linear-gradient(135deg, #f2d1d1 0%, #e5b3b3 100%); color: white; transition: all 0.3s; }
-        .btn-rose:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(229, 179, 179, 0.4); }
+
+        /* === ROSE GOLD LUXE SPARKLES === */
+        .sparkle-container { position: relative; display: inline-block; }
+        .glow-dot {
+            position: absolute;
+            background: #e5b3b3;
+            border-radius: 50%;
+            filter: blur(1px);
+            box-shadow: 0 0 15px 5px rgba(229, 179, 179, 0.6);
+            animation: sparklePulse 4s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 20;
+        }
+        .glow-dot::before, .glow-dot::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            background: white; transform: translate(-50%, -50%);
+        }
+        .glow-dot::before { width: 1px; height: 160%; }
+        .glow-dot::after { width: 160%; height: 1px; }
+
+        @keyframes sparklePulse {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .frosted-panel {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(40px);
+            border: 1.5px solid rgba(229, 179, 179, 0.3);
+            border-radius: 40px;
+        }
+
+        .btn-rose {
+            background: linear-gradient(135deg, #f2d1d1 0%, #e5b3b3 100%);
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-rose:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(229, 179, 179, 0.4); }
+
         .page-fade { transition: all 1s ease-in-out; }
         .hidden-fade { opacity: 0; pointer-events: none; transform: translateY(20px); }
+        
+        #googleBtn { position: absolute; inset: 0; opacity: 0.01; z-index: 50; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div id="loginSection" class="fixed inset-0 z-[100] flex items-center justify-center p-4 page-fade">
         <div class="w-full max-w-4xl text-center">
+            <p class="elegant italic text-[#d69e9e] text-lg mb-6 tracking-widest">Login Wth Google</p>
             <div class="frosted-panel p-10 md:p-32 relative overflow-hidden shadow-2xl">
-                <h2 class="charm text-5xl md:text-8xl text-[#d69e9e] mb-12">The Bridal Atelier</h2>
-                <div id="googleBtn" class="inline-block"></div>
+                <div class="sparkle-container mb-8">
+                    <div class="glow-dot w-3 h-3 -top-8 -left-10"></div>
+                    <div class="glow-dot w-2 h-2 top-0 -right-12" style="animation-delay: 1s;"></div>
+                    <h2 class="charm text-5xl md:text-8xl text-[#d69e9e] leading-tight">The Bridal Atelier</h2>
+                </div>
+                <p class="elegant italic text-[10px] tracking-[0.5em] uppercase text-[#b4a096] mb-16">Curating your most precious treasures</p>
+                <div class="relative inline-flex bg-white px-8 py-4 rounded-full shadow-lg border border-pink-100 items-center gap-3">
+                    <div id="googleBtn"></div>
+                    <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" width="18">
+                    <span class="font-bold text-[12px] text-[#7a5c5c]">Authenticate Sanctuary ✨</span>
+                </div>
             </div>
         </div>
     </div>
@@ -34,48 +86,52 @@
     <div id="setupName" class="fixed inset-0 z-[110] flex items-center justify-center p-4 page-fade hidden hidden-fade">
         <div class="w-full max-w-md text-center">
             <div class="frosted-panel p-10 space-y-6 shadow-xl">
-                <h3 class="charm text-4xl text-[#d69e9e]">The Happy Couple</h3>
-                <input type="text" id="inputUser" placeholder="Her Name" class="w-full p-4 rounded-xl bg-white/70 text-center outline-none border border-pink-100">
-                <input type="text" id="inputPartner" placeholder="His Name" class="w-full p-4 rounded-xl bg-white/70 text-center outline-none border border-pink-100">
+                <h3 class="charm text-5xl text-[#d69e9e]">The Happy Couple</h3>
+                <input type="text" id="inputUser" placeholder="Her Name" class="w-full p-4 rounded-2xl bg-white/70 text-center outline-none border border-pink-50">
+                <input type="text" id="inputPartner" placeholder="His Name" class="w-full p-4 rounded-2xl bg-white/70 text-center outline-none border border-pink-50">
                 <button onclick="saveProfile()" class="w-full btn-rose py-4 rounded-full font-bold uppercase text-[10px] tracking-widest">Begin Our Story ✨</button>
             </div>
         </div>
     </div>
 
     <div id="app" class="max-w-5xl mx-auto px-4 pt-10 page-fade hidden hidden-fade pb-40">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
             <div class="text-center md:text-left">
-                <p class="elegant italic text-[#d69e9e]">The Eternal Collection of</p>
+                <p class="elegant italic text-[#d69e9e] text-xl">The Eternal Collection of</p>
                 <h1 id="titleDisplay" class="charm text-6xl md:text-7xl mt-2">Couple</h1>
+                <button onclick="logout()" class="inline-block bg-white/50 px-6 py-2 rounded-full border border-pink-100 text-[10px] tracking-[0.3em] uppercase mt-6 text-[#d69e9e] hover:bg-pink-50 transition-all font-bold">
+                    — LEAVE ATELIER
+                </button>
             </div>
-            <div class="bg-white/60 p-8 rounded-[2rem] border border-[#f2d1d1] text-center shadow-sm">
+            <div class="bg-white/60 p-8 rounded-[2.5rem] border border-[#f2d1d1] text-center shadow-sm w-full md:w-auto">
                 <p class="text-[9px] font-bold tracking-[0.4em] mb-2 text-[#d69e9e]">TOTAL INVESTMENT</p>
-                <p id="totalPrice" class="text-3xl font-bold tracking-tighter">Rp0</p>
+                <p id="totalPrice" class="text-3xl md:text-5xl font-bold tracking-tighter">Rp0</p>
             </div>
         </header>
 
-        <div class="frosted-panel p-6 md:p-10 mb-20 rounded-[2rem]">
+        <div class="frosted-panel p-6 md:p-10 mb-24 rounded-[2.5rem]">
             <h4 class="text-[10px] font-bold text-[#d69e9e] tracking-[0.4em] mb-8 uppercase text-center">Manifest New Treasure</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <select id="cat" class="w-full p-4 rounded-xl bg-white/70 text-[10px] font-bold outline-none border border-pink-50">
-                    <option>The Bridal Attire</option>
-                    <option>Grace & Beauty</option>
-                    <option>Sacred Jewelry</option>
-                    <option>The Ceremony Needs</option>
+                <select id="cat" class="w-full p-4 rounded-xl bg-white/70 text-[10px] font-bold outline-none border border-pink-50 appearance-none">
+                    <option> The Bridal Attire</option>
+                    <option> Grace & Beauty</option>
+                    <option> Sacred Jewelry</option>
+                    <option> The Ceremony Needs</option>
                 </select>
                 <input type="number" id="price" placeholder="Estimated Price (Rp)" class="w-full p-4 rounded-xl bg-white/70 text-[10px] outline-none border border-pink-50">
                 <input type="text" id="name" placeholder="Name of your desire..." class="md:col-span-2 w-full p-4 rounded-xl bg-white/70 text-[10px] outline-none border border-pink-50">
                 
                 <div class="md:col-span-2">
-                    <label class="block text-[9px] font-bold mb-2 text-[#d69e9e]">VISUAL INSPIRATION (SCREENSHOT SHOPEE)</label>
+                    <label class="block text-[9px] font-bold mb-2 text-[#d69e9e] tracking-widest">VISUAL INSPIRATION (GALLERY/SCREENSHOT)</label>
                     <input type="file" id="fileImg" accept="image/*" class="w-full p-3 rounded-xl bg-white/70 text-[10px] border border-dashed border-[#e5b3b3]">
                 </div>
 
                 <input type="text" id="shopeeLink" placeholder="Paste Shopee Link Here (🧡)" class="md:col-span-2 w-full p-4 rounded-xl bg-white/70 text-[10px] outline-none border border-pink-50">
             </div>
-            <button onclick="addItem()" id="btnSimpan" class="w-full mt-8 btn-rose py-5 rounded-full font-bold text-[10px] tracking-[0.2em] uppercase">Enshrine to List ✨</button>
+            <button onclick="addItem()" id="btnSimpan" class="w-full mt-10 btn-rose py-6 rounded-full font-bold text-[10px] tracking-[0.2em] uppercase">Enshrine to List ✨</button>
         </div>
-        <div id="content" class="space-y-20"></div>
+
+        <div id="content" class="space-y-24"></div>
     </div>
 
     <script>
@@ -113,6 +169,13 @@
             }
         }
 
+        function logout() {
+            if(confirm("Apakah kamu ingin meninggalkan Atelier? ❤️")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
         function showMainApp() {
             document.getElementById('app').classList.remove('hidden');
             setTimeout(() => document.getElementById('app').classList.remove('hidden-fade'), 50);
@@ -120,7 +183,6 @@
             loadData();
         }
 
-        // FUNGSI UNTUK KONVERSI GAMBAR KE LINK (Agar bisa disimpan)
         function getBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -131,6 +193,9 @@
         }
 
         async function addItem() {
+            const btn = document.getElementById('btnSimpan');
+            btn.innerText = "Saving to Eternity...";
+            
             const fileInput = document.getElementById('fileImg');
             let imgData = 'https://via.placeholder.com/600x800?text=The+Bridal+Atelier';
             
@@ -150,13 +215,14 @@
 
             await fetch('/api/manage', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
             loadData();
-            // Reset fields
             document.getElementById('name').value = ''; document.getElementById('price').value = ''; 
             document.getElementById('fileImg').value = ''; document.getElementById('shopeeLink').value = '';
+            btn.innerText = "Enshrine to List ✨";
         }
 
         async function loadData() {
-            const res = await fetch('/api/manage?email=' + localStorage.getItem('user_email'));
+            const email = localStorage.getItem('user_email');
+            const res = await fetch(`/api/manage?email=${email}`);
             const data = await res.json();
             render(Array.isArray(data) ? data : []);
         }
@@ -164,24 +230,27 @@
         function render(data) {
             const container = document.getElementById('content');
             container.innerHTML = '';
-            document.getElementById('totalPrice').innerText = "Rp" + data.reduce((s, i) => s + i.price, 0).toLocaleString('id-ID');
+            const total = data.reduce((s, i) => s + i.price, 0);
+            document.getElementById('totalPrice').innerText = "Rp" + total.toLocaleString('id-ID');
+            
             const grouped = data.reduce((r, a) => { r[a.category] = [...r[a.category] || [], a]; return r; }, {});
 
             for (const cat in grouped) {
-                let html = `<div><h3 class="elegant italic text-2xl mb-8 text-[#d69e9e] border-b border-pink-100 pb-2">${cat}</h3><div class="grid grid-cols-2 md:grid-cols-3 gap-6">`;
+                let html = `<div><h3 class="elegant italic text-2xl md:text-3xl mb-8 text-[#d69e9e] border-b border-pink-100 pb-2">${cat}</h3><div class="grid grid-cols-2 md:grid-cols-3 gap-6">`;
                 grouped[cat].forEach(i => {
+                    const link = i.product_link && i.product_link !== '#' ? i.product_link : 'javascript:void(0)';
                     html += `
                         <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border-[6px] border-white relative group">
-                            <a href="${i.product_link}" target="_blank" class="block aspect-[4/5] overflow-hidden">
-                                <img src="${i.img_url}" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <span class="bg-white/90 px-4 py-2 rounded-full text-[8px] font-bold">SHOP ON SHOPEE 🧡</span>
+                            <a href="${link}" target="_blank" class="block aspect-[4/5] overflow-hidden relative">
+                                <img src="${i.img_url}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
+                                <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span class="bg-white/90 px-4 py-2 rounded-full text-[8px] font-bold shadow-xl">SHOP NOW 🧡</span>
                                 </div>
                             </a>
-                            <div class="p-5">
-                                <button onclick="deleteItem(${i.id})" class="absolute top-4 right-4 bg-white/90 text-[#d69e9e] w-8 h-8 rounded-full font-bold text-[10px]">✕</button>
-                                <p class="elegant text-[11px] md:text-xl leading-tight line-clamp-2">${i.item_name}</p>
-                                <p class="text-[#d69e9e] font-bold text-[10px] mt-2 italic">Rp${i.price.toLocaleString('id-ID')}</p>
+                            <div class="p-4">
+                                <button onclick="deleteItem(${i.id})" class="absolute top-3 right-3 bg-white/90 text-[#d69e9e] w-7 h-7 rounded-full font-bold text-[10px] shadow-sm">✕</button>
+                                <p class="elegant text-[10px] md:text-xl leading-tight line-clamp-2">${i.item_name}</p>
+                                <p class="text-[#d69e9e] font-bold text-[9px] mt-2 italic">Rp${i.price.toLocaleString('id-ID')}</p>
                             </div>
                         </div>`;
                 });
@@ -190,8 +259,7 @@
             }
         }
 
-        async function deleteItem(id) { if(confirm("Remove?")) { await fetch('/api/manage?id=' + id, { method: 'DELETE' }); loadData(); } }
-        function logout() { localStorage.clear(); location.reload(); }
+        async function deleteItem(id) { if(confirm("Remove?")) { await fetch(`/api/manage?id=${id}`, { method: 'DELETE' }); loadData(); } }
     </script>
 </body>
 </html>
