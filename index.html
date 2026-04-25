@@ -286,178 +286,52 @@
 
         async function deleteItem(id) { if(confirm("Remove?")) { await fetch(`/api/manage?id=${id}`, { method: 'DELETE' }); loadData(); } }
     </script>
-    <script>
-    // 1. KONFIGURASI AWAL
-    const CLIENT_ID = "GANTI_PAKE_ID_KAMU_SITI.apps.googleusercontent.com"; 
+   function render(data) {
+    const container = document.getElementById('content');
+    container.innerHTML = '';
+    const total = data.reduce((s, i) => s + i.price, 0);
+    document.getElementById('totalPrice').innerText = "Rp" + total.toLocaleString('id-ID');
+    
+    const grouped = data.reduce((r, a) => { r[a.category] = [...r[a.category] || [], a]; return r; }, {});
 
-    window.onload = () => {
-        // Inisialisasi Google Login
-        google.accounts.id.initialize({ 
-            client_id: CLIENT_ID, 
-            callback: handleCredentialResponse 
-        });
+    for (const cat in grouped) {
+        let html = `<div>
+            <h3 class="elegant italic text-2xl md:text-3xl mb-8 text-[#d69e9e] border-b border-pink-100 pb-2">${cat}</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">`;
         
-        google.accounts.id.renderButton(
-            document.getElementById("googleBtn"), 
-            { theme: "outline", size: "large" }
-        );
-        
-        const userEmail = localStorage.getItem('user_email');
-        const myName = localStorage.getItem('my_name');
-
-        // Logic Tampilan (Login -> Setup -> App)
-        if(!userEmail) {
-            document.getElementById('loginSection').classList.remove('hidden-fade');
-        } else if(!myName) {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('setupName').classList.remove('hidden');
-            setTimeout(() => document.getElementById('setupName').classList.remove('hidden-fade'), 50);
-        } else {
-            document.getElementById('loginSection').style.display = 'none';
-            showMainApp();
-        }
-    };
-
-    // 2. FUNGSI AUTH & SESSION
-    function handleCredentialResponse(response) {
-        const payload = JSON.parse(atob(response.credential.split('.')[1]));
-        localStorage.setItem('user_email', payload.email);
-        location.reload();
-    }
-
-    function saveProfile() {
-        const m = document.getElementById('inputUser').value;
-        const p = document.getElementById('inputPartner').value;
-        if(m && p) {
-            localStorage.setItem('my_name', m);
-            localStorage.setItem('partner_name', p);
-            location.reload();
-        } else { 
-            alert("Lengkapi nama kalian dulu ya ❤️"); 
-        }
-    }
-
-    function logout() {
-        if(confirm("Apakah kamu ingin meninggalkan Atelier? ❤️")) {
-            localStorage.clear();
-            location.reload();
-        }
-    }
-
-    // 3. LOGIC DASHBOARD
-    function showMainApp() {
-        document.getElementById('app').classList.remove('hidden');
-        setTimeout(() => document.getElementById('app').classList.remove('hidden-fade'), 50);
-        document.getElementById('titleDisplay').innerText = localStorage.getItem('my_name') + " & " + localStorage.getItem('partner_name');
-        loadData();
-    }
-
-    // Fungsi konversi gambar galeri HP ke Link (Base64)
-    function getBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
-        });
-    }
-
-    async function loadData() {
-        const email = localStorage.getItem('user_email');
-        const res = await fetch(`/api/manage?email=${email}`);
-        const data = await res.json();
-        render(Array.isArray(data) ? data : []);
-    }
-
-    async function addItem() {
-        const btn = document.getElementById('btnSimpan');
-        btn.innerText = "Enshrining...";
-        
-        const fileInput = document.getElementById('fileImg');
-        let imgData = 'https://via.placeholder.com/600x800?text=Wedding+Inspiration';
-        
-        if (fileInput.files.length > 0) {
-            imgData = await getBase64(fileInput.files[0]);
-        }
-
-        const body = {
-            user_email: localStorage.getItem('user_email'),
-            partner_name: localStorage.getItem('my_name') + " & " + localStorage.getItem('partner_name'),
-            category: document.getElementById('cat').value,
-            item_name: document.getElementById('name').value,
-            price: parseInt(document.getElementById('price').value) || 0,
-            img_url: imgData,
-            product_link: document.getElementById('shopeeLink').value || '#'
-        };
-
-        await fetch('/api/manage', { 
-            method: 'POST', 
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify(body) 
-        });
-
-        loadData();
-        // Reset Form
-        document.getElementById('name').value = ''; 
-        document.getElementById('price').value = ''; 
-        document.getElementById('fileImg').value = ''; 
-        document.getElementById('shopeeLink').value = '';
-        btn.innerText = "Enshrine to List ✨";
-    }
-
-    // 4. RENDER UI (SAFE LINK VERSION)
-    function render(data) {
-        const container = document.getElementById('content');
-        container.innerHTML = '';
-        const total = data.reduce((s, i) => s + i.price, 0);
-        document.getElementById('totalPrice').innerText = "Rp" + total.toLocaleString('id-ID');
-        
-        const grouped = data.reduce((r, a) => { r[a.category] = [...r[a.category] || [], a]; return r; }, {});
-
-        for (const cat in grouped) {
-            let html = `<div>
-                <h3 class="elegant italic text-2xl md:text-3xl mb-8 text-[#d69e9e] border-b border-pink-100 pb-2">${cat}</h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">`;
+        grouped[cat].forEach(i => {
+            const rawLink = i.product_link && i.product_link !== '#' ? i.product_link : '';
+            const isClickable = rawLink !== '';
             
-            grouped[cat].forEach(i => {
-                const rawLink = i.product_link && i.product_link !== '#' ? i.product_link : '';
-                const isClickable = rawLink !== '';
-                
-                html += `
-                    <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border-[6px] border-white relative group">
-                        <div class="block aspect-[4/5] overflow-hidden relative">
-                            <img src="${i.img_url}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
-                            
-                            ${isClickable ? `
-                            <a href="${rawLink}" target="_blank" rel="noopener noreferrer" class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span class="bg-white/90 px-4 py-2 rounded-full text-[8px] font-bold shadow-xl text-[#7a5c5c]">SHOP NOW 🧡</span>
-                            </a>
-                            ` : ''}
-                        </div>
+            // Trik Ultra Safe: Hapus target="_blank" dan ganti ke perpindahan lokasi langsung
+            html += `
+                <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border-[6px] md:border-[12px] border-white relative group">
+                    <div class="block aspect-[4/5] overflow-hidden relative">
+                        <img src="${i.img_url}" class="w-full h-full object-cover">
                         
-                        <div class="p-4">
-                            <button onclick="deleteItem(${i.id})" class="absolute top-3 right-3 bg-white/90 text-[#d69e9e] w-7 h-7 rounded-full font-bold text-[10px] shadow-sm z-30">✕</button>
-                            <p class="elegant text-[10px] md:text-xl leading-tight line-clamp-2">${i.item_name}</p>
-                            
-                            ${isClickable ? `
-                            <a href="${rawLink}" target="_blank" rel="noopener noreferrer" class="text-[8px] uppercase tracking-widest text-orange-400 font-bold mt-1 inline-block">View on Shopee →</a>
-                            ` : ''}
-                            
-                            <p class="text-[#d69e9e] font-bold text-[9px] mt-2 italic">Rp${i.price.toLocaleString('id-ID')}</p>
+                        ${isClickable ? `
+                        <div onclick="window.location.href='${rawLink}'" class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+                            <span class="bg-white/90 px-4 py-2 rounded-full text-[8px] font-bold shadow-xl text-[#7a5c5c]">SHOP NOW 🧡</span>
                         </div>
-                    </div>`;
-            });
-            html += `</div></div>`;
-            container.innerHTML += html;
-        }
+                        ` : ''}
+                    </div>
+                    
+                    <div class="p-4">
+                        <button onclick="deleteItem(${i.id})" class="absolute top-3 right-3 bg-white/90 text-[#d69e9e] w-7 h-7 rounded-full font-bold text-[10px] shadow-sm z-30">✕</button>
+                        
+                        <p class="elegant text-[10px] md:text-xl leading-tight line-clamp-2">${i.item_name}</p>
+                        
+                        ${isClickable ? `
+                        <button onclick="window.location.href='${rawLink}'" class="text-[8px] uppercase tracking-widest text-orange-400 font-bold mt-1 inline-block">View on Shopee →</button>
+                        ` : ''}
+                        
+                        <p class="text-[#d69e9e] font-bold text-[9px] mt-2 italic">Rp${i.price.toLocaleString('id-ID')}</p>
+                    </div>
+                </div>`;
+        });
+        html += `</div></div>`;
+        container.innerHTML += html;
     }
-
-    async function deleteItem(id) { 
-        if(confirm("Hapus item dari koleksi? ❤️")) { 
-            await fetch(`/api/manage?id=${id}`, { method: 'DELETE' }); 
-            loadData(); 
-        } 
-    }
-</script>
+}</script>
 </body>
 </html>
