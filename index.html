@@ -14,6 +14,7 @@
     </style>
 </head>
 <body class="text-gray-800">
+
     <div id="welcome" class="fixed inset-0 z-[100] bg-gradient-to-br from-pink-200 to-blue-200 flex items-center justify-center p-6 hidden">
         <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl w-full max-w-sm text-center">
             <h2 class="romantic text-5xl text-pink-500 mb-2">VowsDB</h2>
@@ -44,14 +45,16 @@
                 </div>
                 <input type="text" id="name" placeholder="Nama Barang" class="w-full bg-gray-50 p-3 rounded-xl border-none text-xs">
                 <input type="text" id="img" placeholder="Link Gambar" class="w-full bg-gray-50 p-3 rounded-xl border-none text-xs">
-                <button onclick="addItem()" class="w-full bg-pink-500 text-white font-bold py-4 rounded-2xl text-sm shadow-lg shadow-pink-200">Simpan Barang ✨</button>
+                <button onclick="addItem()" id="btnSimpan" class="w-full bg-pink-500 text-white font-bold py-4 rounded-2xl text-sm shadow-lg shadow-pink-200">Simpan Barang ✨</button>
             </div>
             <div id="content" class="space-y-12 pb-20"></div>
         </div>
     </div>
 
     <script>
-        const CLIENT_ID = "933906511221-0moeldahtahrn7sjp2ju1np8k8hufs6c.apps.googleusercontent.com";
+        // MASUKKAN CLIENT ID KAMU DI SINI
+        const CLIENT_ID = "933906511221-0moeldahtahrn7sjp2ju1np8k8hufs6c.apps.googleusercontent.com"; 
+        
         let userEmail = localStorage.getItem('user_email');
         let userName = localStorage.getItem('vows_partner');
 
@@ -79,33 +82,41 @@
 
         async function loadData() {
             const res = await fetch(`/api/manage?email=${userEmail}`);
-            if (res.status === 500) {
-                document.getElementById('content').innerHTML = "<p class='text-center text-red-400 text-xs'>Error 500: Database belum terhubung di Vercel!</p>";
-                return;
-            }
             const data = await res.json();
             render(Array.isArray(data) ? data : []);
         }
 
         async function addItem() {
+            const btn = document.getElementById('btnSimpan');
+            btn.innerText = "Menyimpan...";
+            btn.disabled = true;
+
             const body = {
                 user_email: userEmail,
-                partner_name: userName,
+                partner_name: userName || 'Partner',
                 category: document.getElementById('cat').value,
                 item_name: document.getElementById('name').value,
                 price: parseInt(document.getElementById('price').value) || 0,
-                img_url: document.getElementById('img').value || 'https://via.placeholder.com/200'
+                img_url: document.getElementById('img').value || ''
             };
-            await fetch('/api/manage', {
+
+            const res = await fetch('/api/manage', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(body)
             });
-            location.reload();
+
+            if(res.ok) {
+                location.reload();
+            } else {
+                alert("Gagal simpan! Cek koneksi atau database.");
+                btn.innerText = "Simpan Barang ✨";
+                btn.disabled = false;
+            }
         }
 
         async function deleteItem(id) {
-            if(confirm("Hapus barang?")) {
+            if(confirm("Hapus barang ini?")) {
                 await fetch(`/api/manage?id=${id}`, { method: 'DELETE' });
                 loadData();
             }
@@ -117,14 +128,16 @@
             container.innerHTML = '';
             const total = data.reduce((s, i) => s + i.price, 0);
             totalDisplay.innerText = `Rp${total.toLocaleString('id-ID')}`;
+
             const grouped = data.reduce((r, a) => {
                 r[a.category] = [...r[a.category] || [], a];
                 return r;
             }, {});
+
             for (const cat in grouped) {
                 let html = `<div><h3 class="font-bold text-[10px] text-blue-400 mb-4 border-b border-blue-50 pb-1 uppercase tracking-widest">${cat}</h3><div class="grid grid-cols-2 gap-4">`;
                 grouped[cat].forEach(i => {
-                    html += `<div class="shopee-card relative"><button onclick="deleteItem(${i.id})" class="absolute top-2 right-2 bg-white/80 text-pink-500 w-6 h-6 rounded-full text-[10px] z-10 shadow-sm">✕</button><img src="${i.img_url}" class="w-full aspect-square object-cover" onerror="this.src='https://via.placeholder.com/200'"><div class="p-3"><p class="text-[11px] text-gray-500 line-clamp-2 h-8 mb-2">${i.item_name}</p><p class="text-pink-500 font-bold text-sm">Rp${i.price.toLocaleString('id-ID')}</p></div></div>`;
+                    html += `<div class="shopee-card relative"><button onclick="deleteItem(${i.id})" class="absolute top-2 right-2 bg-white/80 text-pink-500 w-6 h-6 rounded-full text-[10px] z-10 shadow-sm">✕</button><img src="${i.img_url || 'https://via.placeholder.com/200'}" class="w-full aspect-square object-cover" onerror="this.src='https://via.placeholder.com/200'"><div class="p-3"><p class="text-[11px] text-gray-500 line-clamp-2 h-8 mb-2">${i.item_name}</p><p class="text-pink-500 font-bold text-sm">Rp${i.price.toLocaleString('id-ID')}</p></div></div>`;
                 });
                 html += `</div></div>`;
                 container.innerHTML += html;
