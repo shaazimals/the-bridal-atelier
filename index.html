@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VowsDB | Romantic Wedding Gallery</title>
+    <title>VowsDB | The Wedding Gallery</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
@@ -17,29 +17,29 @@
         .charm { font-family: 'Charm', cursive; }
         .elegant { font-family: 'Playfair Display', serif; }
         
-        /* Glassmorphism Wedding Style */
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.5); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.8); 
-            border-radius: 40px; 
-            box-shadow: 0 20px 50px rgba(253, 164, 175, 0.1);
-        }
-
-        /* Sparkle & Petals Layer */
-        #visual-effects { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+        /* Efek Visual (Petals & Sparkles) */
+        #visual-layer { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
         .sparkle { position: absolute; background: white; border-radius: 50%; box-shadow: 0 0 10px 2px white; animation: sparkleAnim 4s infinite; opacity: 0; }
         .petal { position: absolute; background: #ffd1dc; border-radius: 150% 0 150% 0; animation: fall 10s linear infinite; opacity: 0.3; }
 
         @keyframes sparkleAnim { 0%, 100% { transform: scale(0); opacity: 0; } 50% { transform: scale(1); opacity: 0.6; } }
         @keyframes fall {
             0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.4; }
+            10% { opacity: 0.5; }
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Transitions */
-        .fade-out { opacity: 0; transition: opacity 0.8s ease; pointer-events: none; }
+        /* Glassmorphism */
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.55); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.7); 
+            border-radius: 40px; 
+        }
+
+        /* Transisi Halaman */
+        .page-fade { transition: all 0.8s ease-in-out; }
+        .hidden-fade { opacity: 0; pointer-events: none; transform: scale(1.05); }
         .fade-in-up { animation: fadeInUp 1.2s ease-out forwards; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -49,72 +49,66 @@
             border-radius: 20px;
             transition: all 0.4s;
         }
-        .input-wedding:focus { border-color: #fda4af; background: white; box-shadow: 0 0 20px rgba(253, 164, 175, 0.2); outline: none; }
-        
-        .wedding-btn {
-            background: linear-gradient(to r, #fda4af, #fb7185);
-            color: white;
-            transition: all 0.3s;
-            box-shadow: 0 10px 25px rgba(251, 113, 133, 0.3);
-        }
-        .wedding-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(251, 113, 133, 0.4); }
+        .input-wedding:focus { border-color: #fda4af; box-shadow: 0 0 20px rgba(253, 164, 175, 0.2); outline: none; }
     </style>
 </head>
 <body>
 
-    <div id="visual-effects"></div>
+    <div id="visual-layer"></div>
 
-    <div id="loginSection" class="fixed inset-0 z-[100] bg-white/60 backdrop-blur-md flex items-center justify-center p-6 hidden">
+    <div id="loginSection" class="fixed inset-0 z-[100] flex items-center justify-center p-6 page-fade hidden">
         <div class="max-w-sm w-full text-center space-y-10">
-            <div class="relative inline-block">
-                <span class="absolute -top-6 -left-8 text-4xl opacity-50">🕊️</span>
-                <h2 class="charm text-8xl text-pink-400 drop-shadow-sm">VowsDB</h2>
-                <span class="absolute -bottom-4 -right-8 text-4xl opacity-50">🕊️</span>
+            <div class="relative inline-block animate-bounce shadow-pink-200">
+                <h2 class="charm text-8xl text-pink-400 drop-shadow-md">VowsDB</h2>
+                <span class="absolute -top-4 -right-6 text-2xl">✨</span>
             </div>
-            <div class="p-10 glass-card">
-                <p class="elegant italic text-gray-400 mb-8 uppercase tracking-[0.3em] text-[10px]">A Sacred Space For Your Memories</p>
+            <div class="p-12 glass-card shadow-2xl">
+                <p class="elegant italic text-gray-400 mb-10 uppercase tracking-[0.3em] text-[10px]">Your Private Wedding Catalog</p>
                 <div id="googleBtn" class="flex justify-center"></div>
             </div>
         </div>
     </div>
 
-    <div id="setupName" class="fixed inset-0 z-[110] bg-pink-50/30 backdrop-blur-2xl flex items-center justify-center p-6 hidden">
+    <div id="setupName" class="fixed inset-0 z-[110] flex items-center justify-center p-6 page-fade hidden">
         <div class="max-w-md w-full space-y-10 text-center fade-in-up">
-            <h3 class="charm text-6xl text-pink-500">The Happy Couple</h3>
-            <div class="p-10 glass-card space-y-5">
+            <div class="space-y-2">
+                <h3 class="charm text-6xl text-pink-500">The Happy Couple</h3>
+                <p class="elegant italic text-gray-400 text-sm">Fill in your names to begin</p>
+            </div>
+            <div class="p-10 glass-card shadow-2xl space-y-6">
                 <input type="text" id="inputUser" placeholder="Nama Mempelai Wanita" class="w-full p-5 input-wedding text-sm text-center">
-                <div class="charm text-3xl text-pink-300">&</div>
+                <div class="charm text-4xl text-pink-200">and</div>
                 <input type="text" id="inputPartner" placeholder="Nama Mempelai Pria" class="w-full p-5 input-wedding text-sm text-center">
-                <button onclick="saveProfile()" class="w-full wedding-btn font-bold py-5 rounded-2xl mt-4">
+                <button onclick="saveProfile()" class="w-full bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-5 rounded-2xl shadow-lg shadow-pink-200 active:scale-95 transition-all">
                     Tulis Janji Kita ✨
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="app" class="max-w-3xl mx-auto px-6 pt-20 relative z-10 opacity-0 transition-opacity duration-1000">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-20 text-center md:text-left gap-8">
-            <div class="space-y-2">
+    <div id="app" class="max-w-3xl mx-auto px-6 pt-20 relative z-10 page-fade hidden-fade hidden">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
+            <div class="text-center md:text-left">
                 <p class="elegant italic text-pink-400 text-lg">In Harmony & Love</p>
-                <h1 id="titleDisplay" class="charm text-7xl text-gray-800 tracking-wide">Siti & Partner</h1>
-                <button onclick="logout()" class="text-[10px] text-gray-400 hover:text-pink-500 tracking-[0.4em] uppercase">End Session —</button>
+                <h1 id="titleDisplay" class="charm text-7xl text-gray-800 mt-2">Siti & Maas</h1>
+                <button onclick="logout()" class="text-[10px] text-gray-400 hover:text-pink-500 tracking-[0.4em] uppercase mt-4 block mx-auto md:mx-0">Sign Out —</button>
             </div>
-            <div class="bg-white/80 p-8 rounded-[3rem] shadow-xl border border-white min-w-[240px]">
-                <p class="text-[10px] text-blue-300 font-bold uppercase tracking-[0.3em] mb-3">Investment of Love</p>
-                <p id="totalPrice" class="text-4xl font-bold text-gray-800 tracking-tighter">Rp0</p>
+            <div class="bg-white/80 p-8 rounded-[3rem] shadow-xl border border-white min-w-[260px] text-center">
+                <p class="text-[10px] text-blue-300 font-bold uppercase tracking-[0.3em] mb-2">Total Budget</p>
+                <p id="totalPrice" class="text-4xl font-bold text-gray-800 tracking-tighter leading-none">Rp0</p>
             </div>
         </header>
 
-        <div class="glass-card p-10 mb-24 border-white">
+        <div class="glass-card p-10 mb-24 shadow-2xl border-white">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <select id="cat" class="w-full p-5 input-wedding text-xs font-bold appearance-none">
-                    <option>Seserahan Skincare</option><option>Body Care Set</option><option>Fashion & Jewelry</option><option>Perlengkapan Ibadah</option><option>Honeymoon Budget</option>
+                    <option>Seserahan Skincare</option><option>Body Care Set</option><option>Fashion & Jewelry</option><option>Perlengkapan Ibadah</option><option>Lainnya</option>
                 </select>
                 <input type="number" id="price" placeholder="Estimasi Harga (Rp)" class="w-full p-5 input-wedding text-xs">
                 <input type="text" id="name" placeholder="Nama Barang Impian..." class="md:col-span-2 w-full p-5 input-wedding text-xs">
-                <input type="text" id="img" placeholder="Link Inspirasi Gambar (Pinterest)" class="md:col-span-2 w-full p-5 input-wedding text-xs">
+                <input type="text" id="img" placeholder="Link Gambar (Pinterest)" class="md:col-span-2 w-full p-5 input-wedding text-xs">
             </div>
-            <button onclick="addItem()" id="btnSimpan" class="w-full mt-8 wedding-btn font-bold py-5 rounded-2xl text-sm tracking-widest uppercase">
+            <button onclick="addItem()" id="btnSimpan" class="w-full mt-8 bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-5 rounded-2xl shadow-xl shadow-pink-100 hover:scale-[1.02] transition-all">
                 Add to Love List ✨
             </button>
         </div>
@@ -123,12 +117,12 @@
     </div>
 
     <script>
-        const CLIENT_ID = "GANTI_DENGAN_CLIENT_ID_KAMU.apps.googleusercontent.com"; 
+        const CLIENT_ID = "933906511221-0moeldahtahrn7sjp2ju1np8k8hufs6c.apps.googleusercontent.com"; 
 
-        function createVisuals() {
-            const container = document.getElementById('visual-effects');
-            // Create Sparkles
-            for (let i = 0; i < 40; i++) {
+        // Efek Sparkle & Kelopak Bunga (Berjalan Terus)
+        function initVisuals() {
+            const container = document.getElementById('visual-layer');
+            for (let i = 0; i < 35; i++) {
                 const s = document.createElement('div');
                 s.className = 'sparkle';
                 s.style.top = Math.random() * 100 + '%';
@@ -136,15 +130,12 @@
                 s.style.animationDelay = Math.random() * 5 + 's';
                 container.appendChild(s);
             }
-            // Create Petals
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 12; i++) {
                 const p = document.createElement('div');
                 p.className = 'petal';
-                p.style.width = Math.random() * 15 + 10 + 'px';
-                p.style.height = Math.random() * 10 + 8 + 'px';
                 p.style.left = Math.random() * 100 + '%';
                 p.style.animationDelay = Math.random() * 10 + 's';
-                p.style.animationDuration = Math.random() * 5 + 8 + 's';
+                p.style.animationDuration = Math.random() * 5 + 7 + 's';
                 container.appendChild(p);
             }
         }
@@ -154,15 +145,15 @@
         let partnerName = localStorage.getItem('partner_name');
 
         window.onload = () => {
-            createVisuals();
+            initVisuals();
             if(!userEmail) {
                 document.getElementById('loginSection').classList.remove('hidden');
-                renderGoogleButton();
             } else if(!myName || !partnerName) {
                 document.getElementById('setupName').classList.remove('hidden');
             } else {
                 showMainApp();
             }
+            renderGoogleButton();
         };
 
         function renderGoogleButton() {
@@ -173,7 +164,7 @@
         function handleCredentialResponse(response) {
             const payload = JSON.parse(atob(response.credential.split('.')[1]));
             localStorage.setItem('user_email', payload.email);
-            document.getElementById('loginSection').classList.add('fade-out');
+            document.getElementById('loginSection').classList.add('hidden-fade');
             setTimeout(() => {
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('setupName').classList.remove('hidden');
@@ -186,7 +177,7 @@
             if(m && p) {
                 localStorage.setItem('my_name', m);
                 localStorage.setItem('partner_name', p);
-                document.getElementById('setupName').classList.add('fade-out');
+                document.getElementById('setupName').classList.add('hidden-fade');
                 setTimeout(() => {
                     document.getElementById('setupName').classList.add('hidden');
                     showMainApp();
@@ -195,7 +186,9 @@
         }
 
         function showMainApp() {
-            document.getElementById('app').classList.remove('opacity-0');
+            const app = document.getElementById('app');
+            app.classList.remove('hidden');
+            setTimeout(() => app.classList.remove('hidden-fade'), 50);
             document.getElementById('titleDisplay').innerText = `${localStorage.getItem('my_name')} & ${localStorage.getItem('partner_name')}`;
             loadData();
         }
@@ -225,13 +218,6 @@
             btn.innerText = "Add to Love List ✨";
         }
 
-        async function deleteItem(id) {
-            if(confirm("Hapus item ini?")) {
-                await fetch(`/api/manage?id=${id}`, { method: 'DELETE' });
-                loadData();
-            }
-        }
-
         function render(data) {
             const container = document.getElementById('content');
             const totalDisplay = document.getElementById('totalPrice');
@@ -247,19 +233,20 @@
                             <h3 class="elegant italic text-3xl text-gray-700">${cat}</h3>
                             <div class="h-[1px] flex-grow bg-gradient-to-r from-pink-200 to-transparent"></div>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">`;
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">`;
                 
                 grouped[cat].forEach(i => {
                     html += `
-                        <div class="bg-white/90 rounded-[2.5rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border-4 border-white relative">
+                        <div class="bg-white/90 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 group border-[6px] border-white relative">
                             <div class="relative aspect-[4/5] overflow-hidden">
-                                <button onclick="deleteItem(${i.id})" class="absolute top-5 right-5 bg-white/90 text-pink-400 w-10 h-10 rounded-full z-10 opacity-0 group-hover:opacity-100 transition-all font-bold shadow-md text-xs">✕</button>
-                                <img src="${i.img_url || 'https://via.placeholder.com/600x800?text=Wedding+Inspiration'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
+                                <button onclick="deleteItem(${i.id})" class="absolute top-5 right-5 bg-white/90 text-pink-400 w-10 h-10 rounded-full z-20 opacity-0 group-hover:opacity-100 transition-all font-bold">✕</button>
+                                <img src="${i.img_url || 'https://via.placeholder.com/600x800?text=Beauty'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                                <div class="absolute inset-0 bg-gradient-to-t from-pink-50/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-                            <div class="p-8 bg-white">
-                                <p class="text-[9px] text-pink-300 uppercase tracking-[0.4em] mb-3">${cat}</p>
-                                <p class="elegant text-lg text-gray-800 mb-3 tracking-wide">${i.item_name}</p>
-                                <p class="text-pink-400 font-bold text-lg tracking-tighter">Rp${i.price.toLocaleString('id-ID')}</p>
+                            <div class="p-8">
+                                <p class="text-[9px] text-pink-300 uppercase tracking-[0.4em] mb-2">${cat}</p>
+                                <p class="elegant text-xl text-gray-800 mb-3">${i.item_name}</p>
+                                <p class="text-pink-400 font-bold text-lg">Rp${i.price.toLocaleString('id-ID')}</p>
                             </div>
                         </div>`;
                 });
@@ -268,6 +255,7 @@
             }
         }
 
+        async function deleteItem(id) { if(confirm("Hapus item ini?")) { await fetch(`/api/manage?id=${id}`, { method: 'DELETE' }); loadData(); } }
         function logout() { localStorage.clear(); location.reload(); }
     </script>
 </body>
