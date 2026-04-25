@@ -1,16 +1,17 @@
 import { neon } from '@neondatabase/serverless';
 
 export default async function handler(req, res) {
+  if (!process.env.DATABASE_URL) {
+    return res.status(500).json({ error: "DATABASE_URL is missing in Vercel settings" });
+  }
+
   const sql = neon(process.env.DATABASE_URL);
 
   try {
     if (req.method === 'GET') {
       const { email } = req.query;
-      if (!email) return res.status(200).json([]);
-      
       const data = await sql`SELECT * FROM seserahan WHERE user_email = ${email} ORDER BY id DESC`;
-      // Pastikan selalu mengembalikan Array agar render() tidak error
-      return res.status(200).json(Array.isArray(data) ? data : []);
+      return res.status(200).json(data);
     } 
     
     if (req.method === 'POST') {
@@ -26,7 +27,6 @@ export default async function handler(req, res) {
       return res.status(200).json({ msg: 'Deleted' });
     }
   } catch (e) {
-    console.error(e);
     return res.status(500).json({ error: e.message });
   }
 }
