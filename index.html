@@ -3,139 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VowsDB | Precious Memories</title>
+    <title>VowsDB | Pearl Luxe Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <style>
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: #f7f3f0; /* Pearl Base Color */
-            background-image: radial-gradient(circle at center, #ffffff 0%, #f7f3f0 100%);
+            background: radial-gradient(circle at center, #ffffff 0%, #f7f3f0 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
         .charm { font-family: 'Charm', cursive; }
         .elegant { font-family: 'Playfair Display', serif; }
 
-        /* === STATIC PEARL SPARKLES (Persis Gambar) === */
+        /* === SUPER GLOW SPARKLES (PERSIS GAMBAR) === */
         .sparkle-container { position: relative; display: inline-block; }
+        
         .glow-dot {
             position: absolute;
             background: white;
             border-radius: 50%;
-            filter: blur(2px);
-            opacity: 0.6;
-            box-shadow: 0 0 10px 2px white;
+            filter: blur(1px);
+            box-shadow: 
+                0 0 15px 5px rgba(255, 255, 255, 0.9),
+                0 0 30px 10px rgba(255, 244, 230, 0.6);
+            animation: sparklePulse 4s infinite ease-in-out;
             pointer-events: none;
+            z-index: 20;
         }
 
-        /* Glassmorphism Frosted */
+        /* Efek Bintang (+) Di Tengah Glow */
+        .glow-dot::before, .glow-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background: white;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px white;
+        }
+        .glow-dot::before { width: 1px; height: 180%; } /* Garis Vertikal */
+        .glow-dot::after { width: 180%; height: 1px; }  /* Garis Horizontal */
+
+        @keyframes sparklePulse {
+            0%, 100% { opacity: 0.4; transform: scale(0.8) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(90deg); }
+        }
+
+        /* Frosted Glass Panel */
         .frosted-panel {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(30px);
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            border-radius: 50px;
-            box-shadow: 0 25px 60px rgba(180, 160, 150, 0.1);
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(40px);
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
+            border-radius: 60px;
+            box-shadow: 0 40px 100px rgba(180, 160, 150, 0.15);
         }
 
-        /* Button Gradient Pearl */
         .btn-pearl {
             background: linear-gradient(135deg, #eaddd7 0%, #c9b0a7 100%);
             color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            letter-spacing: 0.1em;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 25px rgba(201, 176, 167, 0.4);
+            letter-spacing: 0.2em;
+            transition: all 0.5s;
+            box-shadow: 0 15px 35px rgba(201, 176, 167, 0.4);
         }
-        .btn-pearl:hover { transform: scale(1.02); box-shadow: 0 15px 35px rgba(201, 176, 167, 0.6); }
+        .btn-pearl:hover { transform: translateY(-3px) scale(1.03); filter: brightness(1.05); }
 
-        .page-fade { transition: all 1s ease-in-out; }
-        .hidden-fade { opacity: 0; transform: translateY(20px); }
-
-        /* Floating Animation for Header */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .float-anim { animation: float 6s ease-in-out infinite; }
+        .hidden-fade { opacity: 0; transform: translateY(30px); pointer-events: none; }
+        .page-transition { transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
 <body class="text-[#8e7d77]">
 
-    <div id="loginSection" class="fixed inset-0 z-[100] flex items-center justify-center p-6 page-fade">
+    <div id="loginSection" class="fixed inset-0 z-[100] flex items-center justify-center p-6 page-transition">
         <div class="max-w-4xl w-full text-center">
-            <p class="elegant italic text-[#c9b0a7] text-lg mb-4 opacity-80">In Harmony & Love</p>
+            <p class="elegant italic text-[#c9b0a7] text-xl mb-6 opacity-70">In Harmony & Love</p>
             
-            <div class="frosted-panel p-16 md:p-24 relative overflow-hidden">
+            <div class="frosted-panel p-20 md:p-32 relative">
                 <div class="sparkle-container">
-                    <div class="glow-dot w-3 h-3 -top-4 -left-6"></div>
-                    <div class="glow-dot w-2 h-2 top-0 -right-8"></div>
-                    <div class="glow-dot w-4 h-4 -bottom-6 left-10"></div>
-                    <div class="glow-dot w-2 h-2 top-10 right-20"></div>
+                    <div class="glow-dot w-3 h-3 -top-8 -left-12"></div>
+                    <div class="glow-dot w-2 h-2 -top-4 right-10" style="animation-delay: 1s;"></div>
+                    <div class="glow-dot w-4 h-4 bottom-0 -right-16" style="animation-delay: 2s;"></div>
+                    <div class="glow-dot w-2 h-2 top-20 -left-20" style="animation-delay: 0.5s;"></div>
                     
-                    <h2 class="charm text-8xl md:text-9xl text-[#c9b0a7] mb-6">VowsDB</h2>
+                    <h2 class="charm text-8xl md:text-[10rem] text-[#c9b0a7] leading-none mb-8">VowsDB</h2>
                 </div>
 
-                <p class="elegant italic text-xs tracking-[0.4em] uppercase text-[#b4a096] mb-12">
+                <p class="elegant italic text-[10px] tracking-[0.5em] uppercase text-[#b4a096] mb-16">
                     Curating your precious memories
                 </p>
 
-                <div id="googleBtnWrapper" class="relative inline-block">
-                    <div class="glow-dot w-2 h-2 -top-2 -right-4"></div>
+                <div class="relative inline-block">
+                    <div class="glow-dot w-2 h-2 -top-4 -right-6" style="animation-delay: 1.5s;"></div>
                     <div id="googleBtn"></div>
                 </div>
                 
-                <p class="text-[10px] mt-20 opacity-50 tracking-widest">By Haazima</p>
+                <p class="text-[9px] mt-24 opacity-40 tracking-[0.3em] uppercase font-bold">By Haazima</p>
             </div>
         </div>
     </div>
 
-    <div id="setupName" class="fixed inset-0 z-[110] flex items-center justify-center p-6 page-fade hidden hidden-fade">
-        <div class="max-w-md w-full space-y-10 text-center">
-            <h3 class="charm text-6xl text-[#c9b0a7]">Personalize</h3>
-            <div class="frosted-panel p-10 space-y-6">
-                <input type="text" id="inputUser" placeholder="Your Name" class="w-full p-5 rounded-2xl border-none bg-white/60 text-center text-sm outline-none focus:ring-2 focus:ring-[#eaddd7]">
-                <input type="text" id="inputPartner" placeholder="Partner Name" class="w-full p-5 rounded-2xl border-none bg-white/60 text-center text-sm outline-none focus:ring-2 focus:ring-[#eaddd7]">
-                <button onclick="saveProfile()" class="w-full btn-pearl py-5 rounded-full font-bold text-xs uppercase">
-                    Start Our Journey ✨
+    <div id="setupName" class="fixed inset-0 z-[110] flex items-center justify-center p-6 page-transition hidden hidden-fade">
+        <div class="max-w-md w-full text-center">
+            <h3 class="charm text-6xl text-[#c9b0a7] mb-10">Our Names</h3>
+            <div class="frosted-panel p-12 space-y-6">
+                <input type="text" id="inputUser" placeholder="Her Name" class="w-full p-5 rounded-3xl bg-white/70 border-none text-center outline-none focus:ring-2 focus:ring-[#eaddd7]">
+                <input type="text" id="inputPartner" placeholder="His Name" class="w-full p-5 rounded-3xl bg-white/70 border-none text-center outline-none focus:ring-2 focus:ring-[#eaddd7]">
+                <button onclick="saveProfile()" class="w-full btn-pearl py-5 rounded-full font-bold text-[10px] uppercase mt-4">
+                    START OUR JOURNEY ✨
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="app" class="max-w-4xl mx-auto px-6 pt-24 page-fade hidden hidden-fade pb-32">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-24 gap-12">
-            <div class="text-center md:text-left float-anim">
-                <p class="elegant italic text-[#c9b0a7] text-xl mb-2">Our Story</p>
-                <h1 id="titleDisplay" class="charm text-7xl text-[#8e7d77]">Siti & Partner</h1>
-                <button onclick="logout()" class="text-[10px] tracking-[0.5em] uppercase mt-6 opacity-40 hover:opacity-100 transition-opacity">Sign Out —</button>
+    <div id="app" class="max-w-4xl mx-auto px-6 pt-28 page-transition hidden hidden-fade pb-40">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-28 gap-12">
+            <div class="text-center md:text-left">
+                <p class="elegant italic text-[#c9b0a7] text-2xl">Sweet Devotion</p>
+                <h1 id="titleDisplay" class="charm text-8xl text-[#8e7d77] mt-3 tracking-wide">Siti & Maas</h1>
+                <button onclick="logout()" class="text-[9px] tracking-[0.5em] uppercase mt-8 opacity-40 hover:opacity-100 transition-opacity">— Sign Out</button>
             </div>
-            <div class="bg-white/40 backdrop-blur-md p-10 rounded-[3rem] border border-white/60 text-center shadow-sm">
-                <p class="text-[9px] font-bold uppercase tracking-[0.4em] mb-3 opacity-60">Total Value</p>
-                <p id="totalPrice" class="text-4xl font-bold text-[#8e7d77] tracking-tighter">Rp0</p>
+            <div class="bg-white/50 backdrop-blur-xl p-12 rounded-[4rem] border border-white text-center shadow-sm">
+                <p class="text-[9px] font-bold uppercase tracking-[0.4em] mb-4 opacity-50">Total Collection</p>
+                <p id="totalPrice" class="text-5xl font-bold text-[#8e7d77] tracking-tighter">Rp0</p>
             </div>
         </header>
 
-        <div class="frosted-panel p-10 mb-28">
+        <div class="frosted-panel p-12 mb-32">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <select id="cat" class="w-full p-5 rounded-2xl bg-white/50 border-none text-xs font-bold outline-none cursor-pointer">
-                    <option>Wedding Attire</option><option>Bridal Beauty</option><option>Jewelry</option><option>Sacred Moments</option>
+                <select id="cat" class="w-full p-5 rounded-3xl bg-white/60 border-none text-[10px] font-bold outline-none cursor-pointer">
+                    <option>Wedding Attire</option><option>Bridal Beauty</option><option>Jewelry</option><option>The Ceremony</option>
                 </select>
-                <input type="number" id="price" placeholder="Price (Rp)" class="w-full p-5 rounded-2xl bg-white/50 border-none text-xs outline-none">
-                <input type="text" id="name" placeholder="Name of treasure..." class="md:col-span-2 w-full p-5 rounded-2xl bg-white/50 border-none text-xs outline-none">
-                <input type="text" id="img" placeholder="Pinterest Image Link" class="md:col-span-2 w-full p-5 rounded-2xl bg-white/50 border-none text-xs outline-none">
+                <input type="number" id="price" placeholder="Value (Rp)" class="w-full p-5 rounded-3xl bg-white/60 border-none text-[10px] outline-none">
+                <input type="text" id="name" placeholder="Item name..." class="md:col-span-2 w-full p-5 rounded-3xl bg-white/60 border-none text-[10px] outline-none">
+                <input type="text" id="img" placeholder="Inspiration Image Link" class="md:col-span-2 w-full p-5 rounded-3xl bg-white/60 border-none text-[10px] outline-none">
             </div>
-            <button onclick="addItem()" id="btnSimpan" class="w-full mt-8 btn-pearl py-5 rounded-full font-bold text-xs uppercase tracking-widest">
-                Save to Love List ✨
+            <button onclick="addItem()" id="btnSimpan" class="w-full mt-10 btn-pearl py-6 rounded-full font-bold text-[10px] uppercase">
+                Add to Memory ✨
             </button>
         </div>
 
-        <div id="content" class="space-y-32"></div>
+        <div id="content" class="space-y-40"></div>
     </div>
 
     <script>
-        const CLIENT_ID = "GANTI_DENGAN_CLIENT_ID_KAMU.apps.googleusercontent.com"; 
+        const CLIENT_ID = "PASTE_CLIENT_ID_KAMU_DISINI.apps.googleusercontent.com"; 
 
         let userEmail = localStorage.getItem('user_email');
         let myName = localStorage.getItem('my_name');
@@ -158,7 +170,7 @@
         function renderGoogleButton() {
             google.accounts.id.initialize({ client_id: CLIENT_ID, callback: handleCredentialResponse });
             google.accounts.id.renderButton(document.getElementById("googleBtn"), { 
-                theme: "filled_blue", size: "large", shape: "pill", width: 250 
+                theme: "filled_blue", size: "large", shape: "pill", width: 280 
             });
         }
 
@@ -170,7 +182,7 @@
                 document.getElementById('loginSection').classList.add('hidden');
                 document.getElementById('setupName').classList.remove('hidden');
                 setTimeout(() => document.getElementById('setupName').classList.remove('hidden-fade'), 50);
-            }, 1000);
+            }, 1200);
         }
 
         function saveProfile() {
@@ -183,7 +195,7 @@
                 setTimeout(() => {
                     document.getElementById('setupName').classList.add('hidden');
                     showMainApp();
-                }, 1000);
+                }, 1200);
             }
         }
 
@@ -226,23 +238,23 @@
             for (const cat in grouped) {
                 let html = `
                     <div class="fade-in-up">
-                        <div class="flex items-center gap-8 mb-12">
-                            <h3 class="elegant italic text-2xl">${cat}</h3>
-                            <div class="h-[1px] flex-grow bg-[#c9b0a7]/30"></div>
+                        <div class="flex items-center gap-10 mb-16">
+                            <h3 class="elegant italic text-3xl">${cat}</h3>
+                            <div class="h-[1.5px] flex-grow bg-[#c9b0a7]/20"></div>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">`;
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16">`;
                 
                 grouped[cat].forEach(i => {
                     html += `
-                        <div class="bg-white/80 rounded-[3rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-700 group border-[6px] border-white relative">
+                        <div class="bg-white/90 rounded-[4rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-1000 group border-[10px] border-white relative">
                             <div class="relative aspect-[4/5] overflow-hidden">
-                                <button onclick="deleteItem(${i.id})" class="absolute top-5 right-5 bg-white/90 text-[#c9b0a7] w-10 h-10 rounded-full z-20 opacity-0 group-hover:opacity-100 transition-all font-bold">✕</button>
-                                <img src="${i.img_url || 'https://via.placeholder.com/600x800'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
+                                <button onclick="deleteItem(${i.id})" class="absolute top-6 right-6 bg-white/90 text-[#c9b0a7] w-12 h-12 rounded-full z-20 opacity-0 group-hover:opacity-100 transition-all font-bold">✕</button>
+                                <img src="${i.img_url || 'https://via.placeholder.com/600x800'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
                             </div>
-                            <div class="p-8">
-                                <p class="text-[9px] text-[#c9b0a7] uppercase tracking-[0.4em] mb-2">${cat}</p>
-                                <p class="elegant text-lg mb-3">${i.item_name}</p>
-                                <p class="text-[#c9b0a7] font-bold text-lg">Rp${i.price.toLocaleString('id-ID')}</p>
+                            <div class="p-10">
+                                <p class="text-[9px] text-[#c9b0a7] uppercase tracking-[0.4em] mb-4">${cat}</p>
+                                <p class="elegant text-2xl mb-4 leading-tight">${i.item_name}</p>
+                                <p class="text-[#c9b0a7] font-bold text-xl tracking-tighter">Rp${i.price.toLocaleString('id-ID')}</p>
                             </div>
                         </div>`;
                 });
@@ -251,7 +263,7 @@
             }
         }
 
-        async function deleteItem(id) { if(confirm("Hapus?")) { await fetch(`/api/manage?id=${id}`, { method: 'DELETE' }); loadData(); } }
+        async function deleteItem(id) { if(confirm("Remove?")) { await fetch(`/api/manage?id=${id}`, { method: 'DELETE' }); loadData(); } }
         function logout() { localStorage.clear(); location.reload(); }
     </script>
 </body>
