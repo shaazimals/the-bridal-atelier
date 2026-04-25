@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VowsDB | Our Sweet Memories</title>
+    <title>VowsDB | Our Journey</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
@@ -11,63 +11,74 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: linear-gradient(135deg, #fdf2f8 0%, #eef2ff 100%); min-height: 100vh; }
         .charm { font-family: 'Charm', cursive; }
         .elegant { font-family: 'Playfair Display', serif; }
-        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 24px; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 32px; }
+        .input-soft { background: rgba(255, 255, 255, 0.5); border: 1px solid #fee2e2; transition: all 0.3s; }
+        .input-soft:focus { border-color: #fda4af; box-shadow: 0 0 0 4px rgba(253, 164, 175, 0.1); outline: none; }
     </style>
 </head>
-<body class="text-gray-800 pb-10">
+<body class="text-gray-800">
 
-    <div id="loginSection" class="fixed inset-0 z-[100] bg-white/80 backdrop-blur-xl flex items-center justify-center p-6 hidden">
-        <div class="max-w-sm w-full text-center space-y-6">
-            <h2 class="charm text-6xl text-pink-500">VowsDB</h2>
-            <div class="p-8 glass-card shadow-xl">
-                <p class="text-sm text-gray-500 mb-6 italic">Secure your list with Google</p>
+    <div id="loginSection" class="fixed inset-0 z-[100] bg-white/90 backdrop-blur-xl flex items-center justify-center p-6 hidden">
+        <div class="max-w-sm w-full text-center space-y-8">
+            <h2 class="charm text-7xl text-pink-500">VowsDB</h2>
+            <div class="p-10 glass-card shadow-2xl">
+                <p class="elegant italic text-gray-400 mb-8 uppercase tracking-[0.2em] text-[10px]">Your Private Catalog</p>
                 <div id="googleBtn" class="flex justify-center"></div>
             </div>
         </div>
     </div>
 
-    <div id="setupName" class="fixed inset-0 z-[110] bg-gradient-to-br from-pink-100 to-blue-100 flex items-center justify-center p-6 hidden">
-        <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl w-full max-w-sm text-center">
-            <h3 class="charm text-4xl text-pink-500 mb-4">Personalize It</h3>
-            <p class="text-xs text-gray-400 mb-6 uppercase tracking-widest">Siapa yang sedang merakit kotak ini?</p>
-            <div class="space-y-4">
-                <input type="text" id="inputUser" placeholder="Nama Kamu (cth: Siti)" class="w-full bg-gray-50 p-4 rounded-2xl border-none text-sm outline-none focus:ring-2 focus:ring-pink-300">
-                <input type="text" id="inputPartner" placeholder="Nama Pasangan (cth: Maas)" class="w-full bg-gray-50 p-4 rounded-2xl border-none text-sm outline-none focus:ring-2 focus:ring-pink-300">
-                <button onclick="saveProfile()" class="w-full bg-pink-500 text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-all">Mulai ✨</button>
+    <div id="setupName" class="fixed inset-0 z-[110] bg-gradient-to-br from-pink-50 to-blue-50 flex items-center justify-center p-6 hidden">
+        <div class="max-w-sm w-full space-y-8 text-center">
+            <div class="space-y-2">
+                <h3 class="charm text-5xl text-pink-500">The Beginning</h3>
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest">Tuliskan nama kalian untuk memulai</p>
+            </div>
+            <div class="p-8 glass-card shadow-2xl space-y-4">
+                <input type="text" id="inputUser" placeholder="Nama Panggilanku" class="w-full p-4 rounded-2xl input-soft text-sm">
+                <input type="text" id="inputPartner" placeholder="Nama Panggilannya" class="w-full p-4 rounded-2xl input-soft text-sm">
+                <button onclick="saveProfile()" class="w-full bg-pink-500 text-white font-bold py-4 rounded-2xl shadow-lg shadow-pink-200 active:scale-95 transition-all">
+                    Buka Katalog Kami ✨
+                </button>
             </div>
         </div>
     </div>
 
-    <div id="app" class="max-w-2xl mx-auto px-4 pt-12">
-        <header class="flex justify-between items-end mb-12">
+    <div id="app" class="max-w-2xl mx-auto px-4 pt-16">
+        <header class="flex justify-between items-end mb-16 px-2">
             <div>
-                <p class="elegant italic text-pink-400 text-sm">A Journey Together</p>
-                <h1 id="titleDisplay" class="charm text-5xl text-gray-800 mt-1">For My Dearest</h1>
-                <button onclick="logout()" class="text-[10px] text-gray-400 hover:text-pink-500 tracking-widest uppercase mt-4">Sign Out —</button>
+                <p class="elegant italic text-pink-400 text-sm mb-1">Our Journey Together</p>
+                <h1 id="titleDisplay" class="charm text-6xl text-gray-800">Siti & Maas</h1>
+                <button onclick="logout()" class="text-[9px] text-gray-400 hover:text-pink-500 tracking-[0.3em] uppercase mt-4 block">Sign Out —</button>
             </div>
-            <div class="text-right bg-white/60 p-5 rounded-3xl border border-white shadow-sm">
-                <p class="text-[10px] text-blue-400 font-bold uppercase tracking-widest mb-1">Budget</p>
-                <p id="totalPrice" class="text-2xl font-bold text-gray-800">Rp0</p>
+            <div class="text-right bg-white/60 p-6 rounded-[2rem] border border-white shadow-sm">
+                <p class="text-[9px] text-blue-400 font-bold uppercase tracking-[0.2em] mb-2">Total Budget</p>
+                <p id="totalPrice" class="text-3xl font-bold text-gray-800 tracking-tighter leading-none">Rp0</p>
             </div>
         </header>
 
-        <div class="glass-card p-8 mb-16 shadow-lg">
+        <div class="glass-card p-8 mb-20 shadow-xl border-white/80">
+            <h4 class="text-[10px] font-bold text-pink-300 uppercase tracking-[0.3em] mb-6">Add New Treasure</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <select id="cat" class="bg-white/50 p-4 rounded-2xl border border-pink-50 text-xs font-bold outline-none">
-                    <option>Skincare</option><option>Body Care</option><option>Fashion</option><option>Ibadah</option><option>Perhiasan</option>
+                <select id="cat" class="w-full p-4 rounded-2xl input-soft text-xs font-bold appearance-none cursor-pointer">
+                    <option>Skincare</option><option>Body Care</option><option>Fashion</option><option>Ibadah</option><option>Perhiasan</option><option>Lainnya</option>
                 </select>
-                <input type="number" id="price" placeholder="Harga (Rp)" class="bg-white/50 p-4 rounded-2xl border border-pink-50 text-xs outline-none">
-                <input type="text" id="name" placeholder="Nama Barang" class="md:col-span-2 bg-white/50 p-4 rounded-2xl border border-pink-50 text-xs outline-none">
-                <input type="text" id="img" placeholder="Link Gambar" class="md:col-span-2 bg-white/50 p-4 rounded-2xl border border-pink-50 text-xs outline-none">
+                <input type="number" id="price" placeholder="Harga (Rp)" class="w-full p-4 rounded-2xl input-soft text-xs">
+                <input type="text" id="name" placeholder="Apa nama barangnya?" class="md:col-span-2 w-full p-4 rounded-2xl input-soft text-xs">
+                <input type="text" id="img" placeholder="Link Gambar (Pinterest/Shopee)" class="md:col-span-2 w-full p-4 rounded-2xl input-soft text-xs">
             </div>
-            <button onclick="addItem()" id="btnSimpan" class="w-full mt-6 bg-pink-500 text-white font-bold py-4 rounded-2xl shadow-pink-200 shadow-xl hover:bg-pink-600 transition-all">Save to Memory ✨</button>
+            <button onclick="addItem()" id="btnSimpan" class="w-full mt-6 bg-gradient-to-r from-pink-400 to-pink-500 text-white font-bold py-5 rounded-2xl shadow-xl shadow-pink-100 hover:shadow-pink-200 transition-all">
+                Simpan ke Daftar ✨
+            </button>
         </div>
 
-        <div id="content" class="space-y-20"></div>
+        <div id="content" class="space-y-24 pb-20">
+            </div>
     </div>
 
     <script>
-        const CLIENT_ID = " 933906511221-0moeldahtahrn7sjp2ju1np8k8hufs6c.apps.googleusercontent.com"; 
+        const CLIENT_ID = "933906511221-0moeldahtahrn7sjp2ju1np8k8hufs6c.apps.googleusercontent.com"; 
+        
         let userEmail = localStorage.getItem('user_email');
         let myName = localStorage.getItem('my_name');
         let partnerName = localStorage.getItem('partner_name');
@@ -79,7 +90,6 @@
             } else if(!myName || !partnerName) {
                 document.getElementById('setupName').classList.remove('hidden');
             } else {
-                // Tampilan font Charm di Header
                 document.getElementById('titleDisplay').innerText = `${myName} & ${partnerName}`;
                 loadData();
             }
@@ -104,7 +114,7 @@
                 localStorage.setItem('partner_name', p);
                 location.reload();
             } else {
-                alert("Isi kedua nama ya biar lebih intimate! ❤️");
+                alert("Tolong isi kedua nama ya ❤️");
             }
         }
 
@@ -115,6 +125,10 @@
         }
 
         async function addItem() {
+            const btn = document.getElementById('btnSimpan');
+            btn.innerText = "Saving...";
+            btn.disabled = true;
+
             const body = {
                 user_email: userEmail,
                 partner_name: `${myName} & ${partnerName}`,
@@ -123,6 +137,7 @@
                 price: parseInt(document.getElementById('price').value) || 0,
                 img_url: document.getElementById('img').value || ''
             };
+
             await fetch('/api/manage', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -142,25 +157,34 @@
             const container = document.getElementById('content');
             const totalDisplay = document.getElementById('totalPrice');
             container.innerHTML = '';
+            
             const total = data.reduce((s, i) => s + i.price, 0);
             totalDisplay.innerText = `Rp${total.toLocaleString('id-ID')}`;
+
             const grouped = data.reduce((r, a) => {
                 r[a.category] = [...r[a.category] || [], a];
                 return r;
             }, {});
 
             for (const cat in grouped) {
-                let html = `<div><div class="flex items-center gap-4 mb-8"><h3 class="elegant italic text-2xl text-gray-700">${cat}</h3><div class="h-[1px] flex-grow bg-pink-200"></div></div><div class="grid grid-cols-2 md:grid-cols-3 gap-6">`;
+                let html = `
+                    <div class="fade-in">
+                        <div class="flex items-center gap-6 mb-10">
+                            <h3 class="elegant italic text-2xl text-gray-700">${cat}</h3>
+                            <div class="h-[1px] flex-grow bg-gradient-to-r from-pink-200 to-transparent"></div>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">`;
+                
                 grouped[cat].forEach(i => {
                     html += `
-                        <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all group border border-white">
+                        <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 group border border-white">
                             <div class="relative aspect-square overflow-hidden">
-                                <button onclick="deleteItem(${i.id})" class="absolute top-3 right-3 bg-white/90 text-pink-400 w-8 h-8 rounded-full text-[10px] z-10 opacity-0 group-hover:opacity-100 transition-all font-bold">✕</button>
-                                <img src="${i.img_url || 'https://via.placeholder.com/400'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <button onclick="deleteItem(${i.id})" class="absolute top-4 right-4 bg-white/90 text-pink-400 w-9 h-9 rounded-full text-[10px] z-10 opacity-0 group-hover:opacity-100 transition-all font-bold shadow-sm">✕</button>
+                                <img src="${i.img_url || 'https://via.placeholder.com/400'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             </div>
-                            <div class="p-5">
-                                <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">${cat}</p>
-                                <p class="text-xs font-bold text-gray-700 mb-2 line-clamp-1 uppercase">${i.item_name}</p>
+                            <div class="p-6">
+                                <p class="text-[9px] text-gray-300 uppercase tracking-widest mb-2">${cat}</p>
+                                <p class="text-xs font-bold text-gray-700 mb-3 line-clamp-1 uppercase tracking-tight">${i.item_name}</p>
                                 <p class="text-pink-500 font-bold text-sm italic">Rp${i.price.toLocaleString('id-ID')}</p>
                             </div>
                         </div>`;
