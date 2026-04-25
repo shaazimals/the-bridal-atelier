@@ -75,13 +75,22 @@
 
         .page-fade { transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
         .hidden-fade { opacity: 0; transform: translateY(30px); pointer-events: none; }
+        
+        /* Image Upload Styling */
+        .file-input-label {
+            background: #fff;
+            border: 1px dashed #e5b3b3;
+            color: #d69e9e;
+            transition: all 0.3s;
+        }
+        .file-input-label:hover { background: #fff5f5; border-color: #d69e9e; }
     </style>
 </head>
 <body>
 
     <div id="loginSection" class="fixed inset-0 z-[100] flex items-center justify-center p-4 page-fade">
         <div class="w-full max-w-4xl text-center">
-            <p class="elegant italic text-[#d69e9e] text-lg md:text-xl mb-6 tracking-widest">A Sanctuary for Your Wedding Dreams</p>
+            <p class="elegant italic text-[#d69e9e] text-lg md:text-xl mb-6 tracking-widest">Login With Goole</p>
             <div class="frosted-panel p-10 md:p-32 rounded-[3rem] md:rounded-[4rem] relative overflow-hidden">
                 <div class="sparkle-container mb-8">
                     <div class="glow-dot w-3 h-3 -top-10 -left-12"></div>
@@ -97,7 +106,7 @@
                         Authenticate Your Sanctuary 
                     </div>
                 </div>
-                <p class="text-[9px] mt-24 opacity-40 tracking-[0.3em] uppercase font-bold italic">By Haazima</p>
+                <p class="text-[9px] mt-24 opacity-40 tracking-[0.3em] uppercase font-bold italic">Developed with love by Haazima</p>
             </div>
         </div>
     </div>
@@ -110,7 +119,7 @@
                 <input type="text" id="inputUser" placeholder="Her Name" class="w-full p-5 rounded-2xl bg-white/70 border-none text-center outline-none focus:ring-2 focus:ring-[#f2d1d1]">
                 <input type="text" id="inputPartner" placeholder="His Name" class="w-full p-5 rounded-2xl bg-white/70 border-none text-center outline-none focus:ring-2 focus:ring-[#f2d1d1]">
                 <button onclick="saveProfile()" class="w-full bg-gradient-to-r from-pink-200 to-[#e5b3b3] text-white font-bold py-5 rounded-full text-[10px] tracking-[0.2em] shadow-lg">
-                    BEGIN OUR STORY ✨
+                    BEGIN OUR STORY 
                 </button>
             </div>
         </div>
@@ -120,7 +129,7 @@
         <header class="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
             <div class="text-center md:text-left">
                 <p class="elegant italic text-[#d69e9e] text-xl">The Eternal Collection of</p>
-                <h1 id="titleDisplay" class="charm text-6xl md:text-8xl mt-2">Gorgeous</h1>
+                <h1 id="titleDisplay" class="charm text-6xl md:text-8xl mt-2 tracking-wide">Mempelai</h1>
                 <button onclick="logout()" class="text-[9px] tracking-[0.5em] uppercase mt-6 opacity-40 hover:opacity-100 transition-opacity">— LEAVE THE ATELIER</button>
             </div>
             <div class="bg-white/60 backdrop-blur-xl p-8 md:p-12 rounded-[3rem] md:rounded-[4rem] border border-[#f2d1d1] text-center shadow-sm w-full md:w-auto">
@@ -133,15 +142,15 @@
             <h4 class="text-[10px] font-bold text-[#d69e9e] tracking-[0.4em] mb-8 uppercase">Manifest New Treasure</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <select id="cat" class="w-full p-5 rounded-2xl bg-white/70 border-none text-[10px] font-bold outline-none appearance-none cursor-pointer">
-                    <option>✨ The Bridal Attire</option><option>💄 Grace & Beauty</option><option>💍 Sacred Jewelry</option><option>🕊️ The Ceremony Needs</option><option>🌙 After the Vows</option>
+                    <option>The Bridal Attire</option><option>Grace & Beauty</option><option>Sacred Jewelry</option><option>The Ceremony Needs</option><option>After the Vows</option>
                 </select>
                 <input type="number" id="price" placeholder="Estimated Investment (Rp)" class="w-full p-5 rounded-2xl bg-white/70 border-none text-[10px] outline-none">
                 <input type="text" id="name" placeholder="Name of your desire..." class="md:col-span-2 w-full p-5 rounded-2xl bg-white/70 border-none text-[10px] outline-none">
-                <input type="text" id="img" placeholder="Visual Inspiration Link (Pinterest)" class="w-full p-5 rounded-2xl bg-white/70 border-none text-[10px] outline-none">
-                <input type="text" id="shopeeLink" placeholder="Marketplace Link (Shopee/Tokopedia)" class="w-full p-5 rounded-2xl bg-white/70 border-none text-[10px] outline-none">
+                <input type="text" id="img" placeholder="Visual Link (Pinterest) - Optional" class="w-full p-5 rounded-2xl bg-white/70 border-none text-[10px] outline-none">
+                <input type="text" id="shopeeLink" placeholder="Shopee Product Link (🧡)" class="w-full p-5 rounded-2xl bg-white/70 border-none text-[10px] outline-none">
             </div>
             <button onclick="addItem()" id="btnSimpan" class="w-full mt-10 bg-gradient-to-r from-pink-200 to-[#e5b3b3] text-white font-bold py-6 rounded-full text-[10px] tracking-[0.2em] shadow-lg uppercase">
-                ENSHRINE TO LOVE LIST 
+                ENSHRINE TO LOVE LIST ✨
             </button>
         </div>
 
@@ -199,19 +208,24 @@
         }
 
         async function addItem() {
+            const btn = document.getElementById('btnSimpan');
+            btn.innerText = "Processing Your Dream...";
+            
             const body = {
                 user_email: localStorage.getItem('user_email'),
                 partner_name: `${localStorage.getItem('my_name')} & ${localStorage.getItem('partner_name')}`,
                 category: document.getElementById('cat').value,
                 item_name: document.getElementById('name').value,
                 price: parseInt(document.getElementById('price').value) || 0,
-                img_url: document.getElementById('img').value || '',
+                img_url: document.getElementById('img').value || 'https://via.placeholder.com/600x800?text=Wedding+Inspiration',
                 product_link: document.getElementById('shopeeLink').value || '#'
             };
+            
             await fetch('/api/manage', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
             loadData();
             document.getElementById('name').value = ''; document.getElementById('price').value = ''; 
             document.getElementById('img').value = ''; document.getElementById('shopeeLink').value = '';
+            btn.innerText = "ENSHRINE TO LOVE LIST";
         }
 
         function render(data) {
@@ -235,17 +249,19 @@
                     const targetLink = i.product_link && i.product_link !== '#' ? i.product_link : 'javascript:void(0)';
                     html += `
                         <div class="bg-white rounded-[2rem] md:rounded-[4rem] overflow-hidden shadow-sm border-[6px] md:border-[12px] border-white relative group">
-                            <a href="${targetLink}" target="_blank" class="block overflow-hidden relative aspect-[4/5]">
-                                <img src="${i.img_url || 'https://via.placeholder.com/600x800'}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                            <a href="${targetLink}" target="_blank" rel="noopener noreferrer" class="block overflow-hidden relative aspect-[4/5]">
+                                <img src="${i.img_url}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
                                 <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <span class="bg-white/90 px-6 py-2 rounded-full text-[9px] font-bold tracking-widest">SHOP THE LOOK ✨</span>
+                                    <div class="bg-white/90 px-4 py-2 rounded-full flex items-center gap-2 shadow-xl">
+                                        <span class="text-[8px] md:text-[10px] font-bold tracking-widest">SHOP THE LOOK ✨</span>
+                                    </div>
                                 </div>
                             </a>
                             <div class="p-5 md:p-10">
                                 <button onclick="deleteItem(${i.id})" class="absolute top-4 right-4 bg-white/90 text-[#d69e9e] w-8 h-8 rounded-full z-20 font-bold text-[10px] shadow-sm">✕</button>
                                 <p class="text-[7px] md:text-[10px] text-[#d69e9e] uppercase tracking-[0.2em] mb-2">${i.category}</p>
                                 <a href="${targetLink}" target="_blank">
-                                    <p class="elegant text-[10px] md:text-2xl leading-tight line-clamp-1 hover:text-[#d69e9e] transition-colors">${i.item_name}</p>
+                                    <p class="elegant text-[10px] md:text-2xl leading-tight line-clamp-1 hover:text-orange-400 transition-colors">${i.item_name}</p>
                                 </a>
                                 <p class="text-[#d69e9e] font-bold text-[9px] md:text-xl mt-2 md:mt-4 italic tracking-tight">Rp${i.price.toLocaleString('id-ID')}</p>
                             </div>
