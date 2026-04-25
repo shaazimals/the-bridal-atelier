@@ -21,6 +21,8 @@
         .hidden-fade { opacity: 0; pointer-events: none; transform: translateY(20px); }
         #googleBtn { position: absolute; inset: 0; opacity: 0.01; z-index: 50; }
         .copyright { font-size: 9px; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.5; font-style: italic; }
+        /* Trik agar link shopee tidak dianggap pop-up */
+        .shopee-link-overlay { position: absolute; inset: 0; z-index: 10; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -142,32 +144,30 @@
             render(Array.isArray(data) ? data : []);
         }
 
-        // FUNGSI BUKA LINK ANTI BLANK
-        function openLink(url) {
-            if(!url || url === '#') return;
-            // Membersihkan link dari spasi
-            const cleanUrl = url.trim();
-            // Membuka di tab yang sama agar tidak kena blokir browser mobile
-            window.location.assign(cleanUrl);
-        }
-
         function render(data) {
             const container = document.getElementById('content');
             container.innerHTML = '';
             document.getElementById('totalPrice').innerText = "Rp" + data.reduce((s,i)=>s+i.price,0).toLocaleString('id-ID');
             
             data.forEach(i => {
-                const isClickable = i.product_link && i.product_link !== '#';
+                const link = (i.product_link && i.product_link !== '#') ? i.product_link : null;
+                
+                // Gunakan tag <a> standar agar browser mobile tidak memblokir
                 container.innerHTML += `
                     <div class="bg-white rounded-[2rem] overflow-hidden shadow-sm border-[6px] border-white relative group">
-                        <div class="aspect-[4/5] relative overflow-hidden" ${isClickable ? `onclick="openLink('${i.product_link}')"` : ''}>
+                        <div class="aspect-[4/5] relative overflow-hidden">
                             <img src="${i.img_url}" class="w-full h-full object-cover">
-                            ${isClickable ? `<div class="absolute inset-0 bg-black/5 flex items-center justify-center"><span class="bg-white/90 px-4 py-2 rounded-full text-[8px] font-bold">SHOP NOW 🧡</span></div>` : ''}
+                            ${link ? `
+                                <a href="${link}" class="shopee-link-overlay flex items-center justify-center bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <span class="bg-white/90 px-4 py-2 rounded-full text-[8px] font-bold">SHOP NOW 🧡</span>
+                                </a>
+                            ` : ''}
                         </div>
                         <div class="p-4">
-                            <button onclick="deleteItem(${i.id})" class="absolute top-3 right-3 bg-white/90 text-[#d69e9e] w-7 h-7 rounded-full font-bold text-[10px]">✕</button>
+                            <button onclick="deleteItem(${i.id})" class="absolute top-3 right-3 bg-white/90 text-[#d69e9e] w-7 h-7 rounded-full font-bold text-[10px] z-20">✕</button>
                             <p class="elegant text-[10px] md:text-xl leading-tight line-clamp-2">${i.item_name}</p>
                             <p class="text-[#d69e9e] font-bold text-[9px] mt-2 italic">Rp${i.price.toLocaleString('id-ID')}</p>
+                            ${link ? `<a href="${link}" class="text-[8px] uppercase tracking-widest text-orange-400 font-bold mt-1 inline-block z-20 relative">Shopee ➔</a>` : ''}
                         </div>
                     </div>`;
             });
