@@ -13,7 +13,7 @@
         .charm { font-family: 'Charm', cursive; }
         .elegant { font-family: 'Playfair Display', serif; }
         
-        /* GLOW SPARKLE MEWAH & ESTETIK */
+        /* GLOW SPARKLE ANIMATION */
         .sparkle-point {
             position: absolute; background: #e5b3b3; border-radius: 50%;
             filter: blur(1.5px); animation: sparkleAnim 4s infinite ease-in-out;
@@ -31,6 +31,20 @@
             50% { opacity: 1; transform: scale(1.3) rotate(45deg); }
         }
 
+        /* FALLING PETALS ANIMATION */
+        .petal {
+            position: absolute; background: linear-gradient(to bottom right, #f2d1d1, #e5b3b3);
+            border-radius: 150% 0 150% 0; animation: falling 10s infinite linear;
+            pointer-events: none; z-index: 5; opacity: 0.6;
+        }
+
+        @keyframes falling {
+            0% { transform: translate(0, -10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translate(100px, 100vh) rotate(360deg); opacity: 0; }
+        }
+
         .frosted { 
             background: rgba(255, 255, 255, 0.55); 
             backdrop-filter: blur(30px); 
@@ -39,22 +53,25 @@
         }
         #googleBtn { position: absolute; inset: 0; opacity: 0.01; z-index: 60; cursor: pointer; }
         .hidden-node { display: none !important; }
-        
         .check-custom:checked + label { text-decoration: line-through; opacity: 0.6; }
     </style>
 </head>
 <body>
 
     <div id="loginSection" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#fffafa]">
+        <div class="petal w-4 h-4" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="petal w-3 h-5" style="left: 30%; animation-delay: 2s;"></div>
+        <div class="petal w-5 h-3" style="left: 50%; animation-delay: 4s;"></div>
+        <div class="petal w-4 h-4" style="left: 75%; animation-delay: 1s;"></div>
+        <div class="petal w-3 h-3" style="left: 90%; animation-delay: 6s;"></div>
+
         <div class="sparkle-point w-4 h-4 top-[15%] left-[10%]"></div>
         <div class="sparkle-point w-3 h-3 top-[10%] right-[15%]" style="animation-delay: 1s;"></div>
         <div class="sparkle-point w-5 h-5 bottom-[25%] left-[30%]" style="animation-delay: 2s;"></div>
-        <div class="sparkle-point w-3 h-3 bottom-[15%] right-[10%]" style="animation-delay: 3s;"></div>
 
         <div class="w-full max-w-4xl text-center">
             <p class="elegant italic text-[11px] tracking-[0.6em] text-[#d69e9e] mb-3 uppercase">In Harmony & Love</p>
             <p class="text-[9px] tracking-[0.4em] opacity-60 mb-12 uppercase font-bold italic">Developed with Love by Haazima © 2026</p>
-            
             <div class="frosted p-16 md:p-28 relative shadow-2xl overflow-hidden border-2 border-white">
                 <h2 class="charm text-6xl md:text-[8.5rem] text-[#d69e9e] mb-14 drop-shadow-sm">The Bridal Atelier</h2>
                 <div class="relative inline-flex bg-white px-12 py-5 rounded-full shadow-lg border border-pink-100 items-center gap-4 hover:scale-105 transition-all">
@@ -66,8 +83,13 @@
         </div>
     </div>
 
-    <div id="setupName" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-[#fffafa] hidden-node">
-        <div class="w-full max-w-xl text-center">
+    <div id="setupName" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-[#fffafa] hidden-node overflow-hidden">
+        <div class="petal w-4 h-4" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="petal w-5 h-3" style="left: 80%; animation-delay: 3s;"></div>
+        <div class="sparkle-point w-4 h-4 top-[20%] left-[20%]"></div>
+        <div class="sparkle-point w-4 h-4 bottom-[20%] right-[20%]" style="animation-delay: 1.5s;"></div>
+
+        <div class="w-full max-w-xl text-center z-20">
             <p class="text-[9px] tracking-[0.4em] opacity-60 mb-6 uppercase font-bold italic">Developed with Love by Haazima © 2026</p>
             <h3 class="charm text-7xl text-[#d69e9e] mb-10 tracking-wide">The Happy Couple</h3>
             <div class="frosted p-12 space-y-8 shadow-xl border-2 border-white">
@@ -87,7 +109,7 @@
                 <p id="specialFor" class="elegant italic text-[#d69e9e] text-3xl mb-4">Special for...</p>
                 <h1 class="charm text-7xl md:text-[9rem] tracking-wide leading-none">The Bridal Atelier</h1>
                 <div class="flex items-center gap-6 mt-10">
-                    <button onclick="logout()" class="bg-white/70 px-8 py-3 rounded-full border border-pink-100 text-[10px] uppercase font-bold tracking-widest text-[#d69e9e] hover:bg-white shadow-sm">Logout</button>
+                    <button onclick="logout()" class="bg-white/70 px-8 py-3 rounded-full border border-pink-100 text-[10px] uppercase font-bold tracking-widest text-[#d69e9e]">Logout</button>
                     <span class="text-[10px] opacity-40 uppercase font-bold italic tracking-widest">Haazima © 2026</span>
                 </div>
             </div>
