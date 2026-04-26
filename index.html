@@ -29,7 +29,7 @@
         .frosted { background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(25px); border: 1px solid rgba(229, 179, 179, 0.3); border-radius: 40px; }
         #googleBtn { position: absolute; inset: 0; opacity: 0.01; z-index: 60; cursor: pointer; }
         .page-fade { transition: all 0.8s ease-in-out; }
-        .hidden-node { display: none; opacity: 0; }
+        .hidden-node { display: none !important; opacity: 0; }
     </style>
 </head>
 <body>
@@ -37,8 +37,8 @@
     <div id="loginSection" class="fixed inset-0 z-[100] flex items-center justify-center p-4 page-fade bg-[#fffafa]">
         <div class="sparkle w-3 h-3 top-[20%] left-[15%]"></div>
         <div class="sparkle w-2 h-2 top-[15%] right-[20%]" style="animation-delay: 1s;"></div>
-        <div class="sparkle w-4 h-4 bottom-[20%] left-[25%]" style="animation-delay: 2s;"></div>
-        <div class="sparkle w-2 h-2 bottom-[30%] right-[15%]" style="animation-delay: 3s;"></div>
+        <div class="sparkle w-4 h-4 bottom-[25%] left-[25%]" style="animation-delay: 2s;"></div>
+        <div class="sparkle w-2 h-2 bottom-[35%] right-[15%]" style="animation-delay: 3s;"></div>
 
         <div class="w-full max-w-2xl text-center">
             <p class="elegant italic text-[10px] tracking-[0.4em] text-[#d69e9e] mb-2 uppercase">In Harmony & Love</p>
@@ -60,12 +60,12 @@
         <div class="w-full max-w-md text-center">
             <h3 class="charm text-5xl text-[#d69e9e] mb-10">The Happy Couple</h3>
             <div class="frosted p-10 space-y-6 shadow-xl">
-                <input type="text" id="inputUser" placeholder="Your Name" class="w-full p-5 rounded-2xl bg-white/70 text-center outline-none border border-pink-100 focus:ring-2 focus:ring-pink-200">
-                <input type="text" id="inputPartner" placeholder="Partner's Name" class="w-full p-5 rounded-2xl bg-white/70 text-center outline-none border border-pink-100 focus:ring-2 focus:ring-pink-200">
+                <input type="text" id="inputUser" placeholder="Her Name" class="w-full p-5 rounded-2xl bg-white/70 text-center outline-none border border-pink-100 focus:ring-2 focus:ring-pink-200">
+                <input type="text" id="inputPartner" placeholder="His Name" class="w-full p-5 rounded-2xl bg-white/70 text-center outline-none border border-pink-100 focus:ring-2 focus:ring-pink-200">
                 <button onclick="saveProfile()" class="w-full bg-gradient-to-r from-pink-200 to-[#e5b3b3] text-white font-bold py-5 rounded-full text-[10px] tracking-widest shadow-lg uppercase transition-all hover:opacity-90">
-                    Create Our Story ✨
+                    Begin Our Story ✨
                 </button>
-                <p class="text-[8px] opacity-40 uppercase tracking-widest">Haazima © 2026</p>
+                <p class="text-[8px] opacity-40 uppercase tracking-widest mt-4">Developed with Love by Haazima © 2026</p>
             </div>
         </div>
     </div>
@@ -76,8 +76,8 @@
                 <p id="specialFor" class="elegant italic text-[#d69e9e] text-xl">Special for...</p>
                 <h1 class="charm text-6xl md:text-8xl mt-2 tracking-wide">The Bridal Atelier</h1>
                 <div class="flex items-center gap-4 mt-6">
-                    <button onclick="logout()" class="bg-white/60 px-6 py-2 rounded-full border border-pink-100 text-[9px] uppercase font-bold tracking-widest text-[#d69e9e] hover:bg-pink-100">Logout</button>
-                    <span class="text-[8px] opacity-40 uppercase tracking-widest">Developed by Haazima © 2026</span>
+                    <button onclick="logout()" class="bg-white/60 px-6 py-2 rounded-full border border-pink-100 text-[9px] uppercase font-bold tracking-widest text-[#d69e9e]">Logout</button>
+                    <span class="text-[8px] opacity-40 uppercase tracking-widest italic">Haazima © 2026</span>
                 </div>
             </div>
             <div class="bg-white/80 p-10 rounded-[3rem] border border-pink-100 text-center shadow-sm w-full md:w-auto">
@@ -87,18 +87,17 @@
         </header>
 
         <div class="frosted p-8 md:p-12 mb-24 shadow-lg">
-            <h4 class="text-[10px] font-bold text-[#d69e9e] tracking-[0.5em] mb-10 uppercase text-center italic">Add to Your Collection</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <select id="cat" class="w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] font-bold">
                     <option>✨ The Bridal Attire</option><option>💄 Grace & Beauty</option><option>💍 Sacred Jewelry</option><option>🕊️ The Ceremony Needs</option>
                 </select>
-                <input type="number" id="price" placeholder="Estimated Investment (Rp)" class="w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] outline-none">
-                <input type="text" id="name" placeholder="Item Name" class="md:col-span-2 w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] outline-none">
+                <input type="number" id="price" placeholder="Estimated Price (Rp)" class="w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] outline-none">
+                <input type="text" id="name" placeholder="Name of your desire..." class="md:col-span-2 w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] outline-none">
                 <div class="md:col-span-2">
-                    <label class="text-[9px] font-bold mb-3 block text-[#d69e9e] tracking-widest">VISUAL INSPIRATION (GALLERY)</label>
+                    <label class="text-[9px] font-bold mb-3 block text-[#d69e9e] tracking-widest uppercase">Visual Inspiration (Screenshot)</label>
                     <input type="file" id="fileImg" accept="image/*" class="w-full p-4 bg-white/70 rounded-2xl border border-dashed border-pink-200 text-[10px]">
                 </div>
-                <input type="text" id="shopeeLink" placeholder="Paste Shopee Link (https://...)" class="md:col-span-2 w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] outline-none">
+                <input type="text" id="shopeeLink" placeholder="Shopee Link (https://...)" class="md:col-span-2 w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] outline-none">
             </div>
             <button onclick="addItem()" id="btnSimpan" class="w-full mt-10 bg-gradient-to-r from-pink-200 to-[#e5b3b3] text-white font-bold py-6 rounded-full text-[10px] tracking-widest shadow-xl uppercase">Enshrine to List ✨</button>
         </div>
@@ -107,7 +106,7 @@
     </div>
 
     <script>
-        const CLIENT_ID = "933906511221-0moeldahtahrn7sjp2ju1np8k8hufs6c.apps.googleusercontent.com"; 
+        const CLIENT_ID = " 933906511221-0moeldahtahrn7sjp2ju1np8k8hufs6c.apps.googleusercontent.com"; 
 
         window.onload = () => {
             google.accounts.id.initialize({ client_id: CLIENT_ID, callback: handleAuth });
@@ -116,13 +115,14 @@
             const email = localStorage.getItem('user_email');
             const myName = localStorage.getItem('my_name');
 
+            // FLOW: LOGIN -> NAMA -> DASHBOARD
             if(!email) {
                 document.getElementById('loginSection').classList.remove('hidden-node');
             } else if(!myName) {
-                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('loginSection').classList.add('hidden-node');
                 document.getElementById('setupName').classList.remove('hidden-node');
             } else {
-                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('loginSection').classList.add('hidden-node');
                 showMainApp();
             }
         };
@@ -130,7 +130,7 @@
         function handleAuth(res) {
             const p = JSON.parse(atob(res.credential.split('.')[1]));
             localStorage.setItem('user_email', p.email);
-            location.reload();
+            location.reload(); // Refresh untuk masuk ke tahap input nama
         }
 
         function saveProfile() {
@@ -139,21 +139,20 @@
             if(m && p) {
                 localStorage.setItem('my_name', m);
                 localStorage.setItem('partner_name', p);
-                location.reload();
-            } else { alert("Please complete both names ❤️"); }
+                location.reload(); // Refresh untuk masuk ke dashboard
+            } else { alert("Tolong isi kedua nama ya ❤️"); }
         }
 
-        function logout() { if(confirm("Leave the Atelier?")) { localStorage.clear(); location.reload(); } }
+        function logout() { if(confirm("Tinggalkan Atelier? ❤️")) { localStorage.clear(); location.reload(); } }
 
         function showMainApp() {
-            const app = document.getElementById('app');
-            app.classList.remove('hidden-node');
+            document.getElementById('app').classList.remove('hidden-node');
             document.getElementById('specialFor').innerText = "Special for " + localStorage.getItem('my_name') + " & " + localStorage.getItem('partner_name');
             loadData();
         }
 
         async function addItem() {
-            const btn = document.getElementById('btnSimpan'); btn.innerText = "Processing...";
+            const btn = document.getElementById('btnSimpan'); btn.innerText = "Saving...";
             const file = document.getElementById('fileImg').files[0];
             let img = 'https://via.placeholder.com/600x800?text=Atelier+Inspiration';
             if(file) img = await new Promise(r => { const f = new FileReader(); f.readAsDataURL(file); f.onload = () => r(f.result); });
@@ -169,7 +168,6 @@
             };
             await fetch('/api/manage', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
             loadData(); btn.innerText = "Enshrine to List ✨";
-            // Reset Form
             document.getElementById('name').value=''; document.getElementById('price').value=''; document.getElementById('shopeeLink').value='';
         }
 
@@ -189,11 +187,11 @@
                 data.forEach(i => {
                     const link = (i.product_link && i.product_link.startsWith('http')) ? i.product_link : '#';
                     container.innerHTML += `
-                        <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border-[8px] border-white relative group">
+                        <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border-[8px] border-white relative">
                             <a href="${link}">
                                 <div class="aspect-[4/5] relative">
                                     <img src="${i.img_url}" class="w-full h-full object-cover">
-                                    ${link !== '#' ? `<div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all"><span class="bg-white/90 px-5 py-2 rounded-full text-[8px] font-bold shadow-xl">SHOP ON SHOPEE 🧡</span></div>` : ''}
+                                    ${link !== '#' ? `<div class="absolute inset-0 bg-black/5 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"><span class="bg-white/90 px-5 py-2 rounded-full text-[8px] font-bold shadow-xl">SHOP NOW 🧡</span></div>` : ''}
                                 </div>
                             </a>
                             <div class="p-5">
@@ -206,7 +204,7 @@
             }
         }
 
-        async function deleteItem(id) { if(confirm("Remove?")) { await fetch('/api/manage?id=' + id, { method: 'DELETE' }); loadData(); } }
+        async function deleteItem(id) { if(confirm("Hapus?")) { await fetch('/api/manage?id=' + id, { method: 'DELETE' }); loadData(); } }
     </script>
 </body>
 </html>
