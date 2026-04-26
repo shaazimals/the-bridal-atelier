@@ -6,96 +6,161 @@
     <title>The Bridal Atelier by Haazima</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; background: #fffafa; color: #7a5c5c; margin: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fffafa; color: #7a5c5c; margin: 0; overflow-x: hidden; }
         .charm { font-family: 'Charm', cursive; }
         .elegant { font-family: 'Playfair Display', serif; }
-        .glow-dot { position: absolute; background: #e5b3b3; border-radius: 50%; filter: blur(1px); box-shadow: 0 0 15px 5px rgba(229, 179, 179, 0.6); animation: sparkle 4s infinite ease-in-out; }
-        @keyframes sparkle { 0%, 100% { opacity: 0.5; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.1); } }
-        .frosted { background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); border: 1px solid rgba(229, 179, 179, 0.3); border-radius: 30px; }
-        #googleBtn { position: absolute; inset: 0; opacity: 0.01; z-index: 50; }
+        
+        /* === ESTETIK GLOW SPARKLES === */
+        .sparkle {
+            position: absolute; background: #e5b3b3; border-radius: 50%;
+            filter: blur(1px); animation: blink 4s infinite ease-in-out;
+            pointer-events: none; z-index: 10;
+        }
+        .sparkle::before, .sparkle::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            background: white; transform: translate(-50%, -50%);
+        }
+        .sparkle::before { width: 1px; height: 180%; }
+        .sparkle::after { width: 180%; height: 1px; }
+        @keyframes blink { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+
+        .frosted { background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(25px); border: 1px solid rgba(229, 179, 179, 0.3); border-radius: 40px; }
+        #googleBtn { position: absolute; inset: 0; opacity: 0.01; z-index: 60; cursor: pointer; }
+        .page-fade { transition: all 0.8s ease-in-out; }
+        .hidden-node { display: none; opacity: 0; }
     </style>
 </head>
 <body>
 
-    <div id="loginSection" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div class="frosted p-10 text-center w-full max-w-lg shadow-2xl">
-            <div class="relative inline-block mb-8">
-                <div class="glow-dot w-3 h-3 -top-4 -left-4"></div>
-                <h2 class="charm text-5xl text-[#d69e9e]">The Bridal Atelier</h2>
+    <div id="loginSection" class="fixed inset-0 z-[100] flex items-center justify-center p-4 page-fade bg-[#fffafa]">
+        <div class="sparkle w-3 h-3 top-[20%] left-[15%]"></div>
+        <div class="sparkle w-2 h-2 top-[15%] right-[20%]" style="animation-delay: 1s;"></div>
+        <div class="sparkle w-4 h-4 bottom-[20%] left-[25%]" style="animation-delay: 2s;"></div>
+        <div class="sparkle w-2 h-2 bottom-[30%] right-[15%]" style="animation-delay: 3s;"></div>
+
+        <div class="w-full max-w-2xl text-center">
+            <p class="elegant italic text-[10px] tracking-[0.4em] text-[#d69e9e] mb-2 uppercase">In Harmony & Love</p>
+            <p class="text-[8px] tracking-[0.2em] opacity-60 mb-8 uppercase">Developed with Love by Haazima © 2026</p>
+            
+            <div class="frosted p-12 md:p-24 relative shadow-2xl overflow-hidden">
+                <h2 class="charm text-6xl md:text-8xl text-[#d69e9e] mb-12">The Bridal Atelier</h2>
+                
+                <div class="relative inline-flex bg-white px-10 py-5 rounded-full shadow-lg border border-pink-100 items-center gap-4 transition-transform hover:scale-105">
+                    <div id="googleBtn"></div>
+                    <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" width="20">
+                    <span class="font-bold text-sm text-[#7a5c5c]">Login With Google</span>
+                </div>
             </div>
-            <div class="relative bg-white px-8 py-4 rounded-full shadow-md border inline-flex items-center gap-2">
-                <div id="googleBtn"></div>
-                <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" width="18">
-                <span class="font-bold text-xs">Login with Google</span>
-            </div>
-            <p class="mt-10 text-[9px] uppercase tracking-widest opacity-50 italic">Developed by Haazima © 2026</p>
         </div>
     </div>
 
-    <div id="app" class="max-w-5xl mx-auto px-4 pt-10 hidden pb-20">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
-            <div class="text-center md:text-left">
-                <h1 id="titleDisplay" class="charm text-6xl text-[#d69e9e]">The Couple</h1>
-                <button onclick="logout()" class="text-[9px] uppercase tracking-widest mt-4 opacity-40 font-bold underline">Logout</button>
+    <div id="setupName" class="fixed inset-0 z-[110] flex items-center justify-center p-4 page-fade hidden-node bg-[#fffafa]">
+        <div class="w-full max-w-md text-center">
+            <h3 class="charm text-5xl text-[#d69e9e] mb-10">The Happy Couple</h3>
+            <div class="frosted p-10 space-y-6 shadow-xl">
+                <input type="text" id="inputUser" placeholder="Your Name" class="w-full p-5 rounded-2xl bg-white/70 text-center outline-none border border-pink-100 focus:ring-2 focus:ring-pink-200">
+                <input type="text" id="inputPartner" placeholder="Partner's Name" class="w-full p-5 rounded-2xl bg-white/70 text-center outline-none border border-pink-100 focus:ring-2 focus:ring-pink-200">
+                <button onclick="saveProfile()" class="w-full bg-gradient-to-r from-pink-200 to-[#e5b3b3] text-white font-bold py-5 rounded-full text-[10px] tracking-widest shadow-lg uppercase transition-all hover:opacity-90">
+                    Create Our Story ✨
+                </button>
+                <p class="text-[8px] opacity-40 uppercase tracking-widest">Haazima © 2026</p>
             </div>
-            <div class="bg-white/80 p-6 rounded-3xl border border-pink-100 text-center shadow-sm min-w-[200px]">
-                <p class="text-[9px] font-bold text-[#d69e9e]">TOTAL INVESTMENT</p>
-                <p id="totalPrice" class="text-3xl font-bold">Rp0</p>
+        </div>
+    </div>
+
+    <div id="app" class="max-w-5xl mx-auto px-4 pt-16 page-fade hidden-node pb-40">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-20 gap-8">
+            <div class="text-center md:text-left">
+                <p id="specialFor" class="elegant italic text-[#d69e9e] text-xl">Special for...</p>
+                <h1 class="charm text-6xl md:text-8xl mt-2 tracking-wide">The Bridal Atelier</h1>
+                <div class="flex items-center gap-4 mt-6">
+                    <button onclick="logout()" class="bg-white/60 px-6 py-2 rounded-full border border-pink-100 text-[9px] uppercase font-bold tracking-widest text-[#d69e9e] hover:bg-pink-100">Logout</button>
+                    <span class="text-[8px] opacity-40 uppercase tracking-widest">Developed by Haazima © 2026</span>
+                </div>
+            </div>
+            <div class="bg-white/80 p-10 rounded-[3rem] border border-pink-100 text-center shadow-sm w-full md:w-auto">
+                <p class="text-[9px] font-bold tracking-[0.4em] mb-2 text-[#d69e9e]">TOTAL INVESTMENT</p>
+                <p id="totalPrice" class="text-4xl font-bold tracking-tighter">Rp0</p>
             </div>
         </header>
 
-        <div class="frosted p-6 mb-16 shadow-lg">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <select id="cat" class="p-4 rounded-xl bg-white border border-pink-50 text-xs">
+        <div class="frosted p-8 md:p-12 mb-24 shadow-lg">
+            <h4 class="text-[10px] font-bold text-[#d69e9e] tracking-[0.5em] mb-10 uppercase text-center italic">Add to Your Collection</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <select id="cat" class="w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] font-bold">
                     <option>✨ The Bridal Attire</option><option>💄 Grace & Beauty</option><option>💍 Sacred Jewelry</option><option>🕊️ The Ceremony Needs</option>
                 </select>
-                <input type="number" id="price" placeholder="Price (Rp)" class="p-4 rounded-xl bg-white border border-pink-50 text-xs">
-                <input type="text" id="name" placeholder="Item Name" class="md:col-span-2 p-4 rounded-xl bg-white border border-pink-50 text-xs">
+                <input type="number" id="price" placeholder="Estimated Investment (Rp)" class="w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] outline-none">
+                <input type="text" id="name" placeholder="Item Name" class="md:col-span-2 w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] outline-none">
                 <div class="md:col-span-2">
-                    <label class="text-[9px] font-bold mb-2 block">IMAGE UPLOAD (SCREENSHOT)</label>
-                    <input type="file" id="fileImg" accept="image/*" class="w-full p-2 bg-white rounded-xl border border-dashed border-pink-200 text-xs">
+                    <label class="text-[9px] font-bold mb-3 block text-[#d69e9e] tracking-widest">VISUAL INSPIRATION (GALLERY)</label>
+                    <input type="file" id="fileImg" accept="image/*" class="w-full p-4 bg-white/70 rounded-2xl border border-dashed border-pink-200 text-[10px]">
                 </div>
-                <input type="text" id="shopeeLink" placeholder="Paste Shopee Link Here" class="md:col-span-2 p-4 rounded-xl bg-white border border-pink-50 text-xs">
+                <input type="text" id="shopeeLink" placeholder="Paste Shopee Link (https://...)" class="md:col-span-2 w-full p-5 rounded-2xl bg-white border border-pink-50 text-[10px] outline-none">
             </div>
-            <button onclick="addItem()" id="btnSimpan" class="w-full mt-6 bg-gradient-to-r from-pink-200 to-[#e5b3b3] text-white font-bold py-5 rounded-full text-xs shadow-lg uppercase">Add to My List ✨</button>
+            <button onclick="addItem()" id="btnSimpan" class="w-full mt-10 bg-gradient-to-r from-pink-200 to-[#e5b3b3] text-white font-bold py-6 rounded-full text-[10px] tracking-widest shadow-xl uppercase">Enshrine to List ✨</button>
         </div>
 
-        <div id="content" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
-        <p class="text-center mt-20 text-[9px] opacity-40 uppercase tracking-widest italic">Developed with Love by Haazima © 2026</p>
+        <div id="content" class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-12"></div>
     </div>
 
     <script>
         const CLIENT_ID = "933906511221-0moeldahtahrn7sjp2ju1np8k8hufs6c.apps.googleusercontent.com"; 
 
         window.onload = () => {
-            google.accounts.id.initialize({ client_id: CLIENT_ID, callback: res => {
-                const p = JSON.parse(atob(res.credential.split('.')[1]));
-                localStorage.setItem('user_email', p.email);
-                location.reload();
-            }});
+            google.accounts.id.initialize({ client_id: CLIENT_ID, callback: handleAuth });
             google.accounts.id.renderButton(document.getElementById("googleBtn"), { theme: "outline", size: "large" });
             
-            if(localStorage.getItem('user_email')) {
+            const email = localStorage.getItem('user_email');
+            const myName = localStorage.getItem('my_name');
+
+            if(!email) {
+                document.getElementById('loginSection').classList.remove('hidden-node');
+            } else if(!myName) {
                 document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('app').classList.remove('hidden');
-                document.getElementById('titleDisplay').innerText = "Our Eternal Story";
-                loadData();
+                document.getElementById('setupName').classList.remove('hidden-node');
+            } else {
+                document.getElementById('loginSection').style.display = 'none';
+                showMainApp();
             }
         };
 
-        function logout() { localStorage.clear(); location.reload(); }
+        function handleAuth(res) {
+            const p = JSON.parse(atob(res.credential.split('.')[1]));
+            localStorage.setItem('user_email', p.email);
+            location.reload();
+        }
+
+        function saveProfile() {
+            const m = document.getElementById('inputUser').value;
+            const p = document.getElementById('inputPartner').value;
+            if(m && p) {
+                localStorage.setItem('my_name', m);
+                localStorage.setItem('partner_name', p);
+                location.reload();
+            } else { alert("Please complete both names ❤️"); }
+        }
+
+        function logout() { if(confirm("Leave the Atelier?")) { localStorage.clear(); location.reload(); } }
+
+        function showMainApp() {
+            const app = document.getElementById('app');
+            app.classList.remove('hidden-node');
+            document.getElementById('specialFor').innerText = "Special for " + localStorage.getItem('my_name') + " & " + localStorage.getItem('partner_name');
+            loadData();
+        }
 
         async function addItem() {
-            const btn = document.getElementById('btnSimpan'); btn.innerText = "Saving...";
+            const btn = document.getElementById('btnSimpan'); btn.innerText = "Processing...";
             const file = document.getElementById('fileImg').files[0];
-            let img = 'https://via.placeholder.com/600x800';
+            let img = 'https://via.placeholder.com/600x800?text=Atelier+Inspiration';
             if(file) img = await new Promise(r => { const f = new FileReader(); f.readAsDataURL(file); f.onload = () => r(f.result); });
 
             const body = {
                 user_email: localStorage.getItem('user_email'),
-                partner_name: "The Couple",
+                partner_name: localStorage.getItem('my_name') + " & " + localStorage.getItem('partner_name'),
                 category: document.getElementById('cat').value,
                 item_name: document.getElementById('name').value,
                 price: parseInt(document.getElementById('price').value) || 0,
@@ -103,9 +168,9 @@
                 product_link: document.getElementById('shopeeLink').value.trim()
             };
             await fetch('/api/manage', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) });
-            loadData(); btn.innerText = "Add to My List ✨";
-            document.getElementById('name').value = ''; document.getElementById('price').value = ''; 
-            document.getElementById('fileImg').value = ''; document.getElementById('shopeeLink').value = '';
+            loadData(); btn.innerText = "Enshrine to List ✨";
+            // Reset Form
+            document.getElementById('name').value=''; document.getElementById('price').value=''; document.getElementById('shopeeLink').value='';
         }
 
         async function loadData() {
@@ -122,27 +187,26 @@
             
             if(Array.isArray(data)) {
                 data.forEach(i => {
-                    // LINK DIBUAT SIMPLE: Langsung pakai tag <a> murni
                     const link = (i.product_link && i.product_link.startsWith('http')) ? i.product_link : '#';
                     container.innerHTML += `
-                        <div class="bg-white rounded-3xl overflow-hidden shadow-sm border-4 border-white relative">
+                        <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border-[8px] border-white relative group">
                             <a href="${link}">
                                 <div class="aspect-[4/5] relative">
                                     <img src="${i.img_url}" class="w-full h-full object-cover">
-                                    ${link !== '#' ? `<div class="absolute bottom-2 right-2 bg-orange-500 text-white text-[8px] font-bold px-3 py-1 rounded-full shadow-lg">🛒 SHOP</div>` : ''}
+                                    ${link !== '#' ? `<div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all"><span class="bg-white/90 px-5 py-2 rounded-full text-[8px] font-bold shadow-xl">SHOP ON SHOPEE 🧡</span></div>` : ''}
                                 </div>
                             </a>
-                            <div class="p-3">
-                                <button onclick="deleteItem(${i.id})" class="absolute top-2 right-2 bg-white/90 text-pink-300 w-6 h-6 rounded-full font-bold text-[10px]">✕</button>
-                                <p class="text-[10px] font-bold line-clamp-1">${i.item_name}</p>
-                                <p class="text-[#d69e9e] font-bold text-[9px] mt-1 italic">Rp${i.price.toLocaleString('id-ID')}</p>
+                            <div class="p-5">
+                                <button onclick="deleteItem(${i.id})" class="absolute top-4 right-4 bg-white/90 text-pink-300 w-8 h-8 rounded-full font-bold text-[10px] z-20">✕</button>
+                                <p class="elegant text-[11px] md:text-xl leading-tight line-clamp-1">${i.item_name}</p>
+                                <p class="text-[#d69e9e] font-bold text-[10px] mt-2 italic">Rp${i.price.toLocaleString('id-ID')}</p>
                             </div>
                         </div>`;
                 });
             }
         }
 
-        async function deleteItem(id) { if(confirm("Hapus?")) { await fetch('/api/manage?id=' + id, { method: 'DELETE' }); loadData(); } }
+        async function deleteItem(id) { if(confirm("Remove?")) { await fetch('/api/manage?id=' + id, { method: 'DELETE' }); loadData(); } }
     </script>
 </body>
 </html>
